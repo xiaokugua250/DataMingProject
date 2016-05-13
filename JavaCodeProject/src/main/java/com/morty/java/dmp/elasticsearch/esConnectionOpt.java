@@ -21,7 +21,7 @@ import  com.morty.java.dmp.elasticsearch.esDescribeInfo.*;
 public class esConnectionOpt {
     public static org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(esConnectionOpt.class);
 
-    public TransportClient client;       //ES Client
+    private TransportClient client;       //ES Client
     public  Settings settings;          //ES Settings
     public SearchRequestBuilder builder;    //ES查询条件Builder
     public void init(){
@@ -61,37 +61,7 @@ public class esConnectionOpt {
         }
     }
 
-    public SearchRequestBuilder getESQueryBuider(){
-        builder=client.prepareSearch(esDescribeInfo.ES_INDEX_NMAE);     //搜索Index
-        builder.setTypes(esDescribeInfo.ES_TYPE_NAME);      //搜索Type
-        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);  //搜索类型
-        //TODO 设置查询条件,builder.setXXX
-        /* builder.setQuery(QueryBuilders.matchQuery("wareName","30liuliang"));// 设置查询条件
-          builder.setPostFilter(FilterBuilders.rangeFilter("countValue").from(1000).to(5000));//设置过滤条件
-          builder.addSort("countValue", SortOrder.ASC);//字段排序
-          builder.addHighlightedField("wareName");//设置高亮字段
-          builder.setHighlighterPreTags("<font red='colr'>");//设置高亮前缀
-          builder.setHighlighterPostTags("</font>");//设置高亮后缀
-          builder.setFrom(0);//pageNo 开始下标
-          builder.setSize(2);//pageNum 共显示多少条
-        * */
-        return  builder;
-    }
 
-    /**
-     * ES查询示例demo，其中查询条件可依据条件构建
-     * @return response     es查询结果
-     */
-    public Object queryES(SearchRequestBuilder builder){
-      try{
-          SearchResponse response=builder.execute().actionGet();
-          return response;
-      }catch (Exception e){
-          e.printStackTrace();
-          LOG.error("QUERY ERROR "+e.getMessage());
-      }
-        return null;
-    }
 
 
 
