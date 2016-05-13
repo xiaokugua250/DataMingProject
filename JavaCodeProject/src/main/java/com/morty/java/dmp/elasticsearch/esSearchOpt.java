@@ -167,7 +167,7 @@ public class esSearchOpt {
                 .add(srb2)
                 .execute()
                 .actionGet();
-        
+
 // You will get all individual responses from MultiSearchResponse#getResponses()
         long nbHits=0;
         for(MultiSearchResponse.Item item:sr.getResponses()){
