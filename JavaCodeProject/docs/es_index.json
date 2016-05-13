@@ -1,0 +1,61 @@
+{
+  "mappings":{
+    "user":{
+      "_all":{"enabled":false},
+      "properties":{
+        "title":{"type":"string", "doc_value":"true"},
+        "name":{"type":"string", "doc_value":"true"},
+        "age":{"type":"integer", "doc_value":"true"},
+        "vip":{"type":"boolean", "doc_value":"true"},
+        "address":{
+          "properties":{
+            "province":{
+              "index":"not_analyzed",
+              "doc_value":"true",
+              "type":"string"
+            },
+            "city":{
+              "index":"not_analyzed",
+              "type":"string",
+              "doc_value":"true"
+            },
+            "postcode":{
+              "index":"not_analyzed",
+              "type":"string",
+              "doc_value":"true"
+            }
+          }
+        }
+      }
+    },
+    "blogpost":{
+      "properties":{
+        "title":{"type":"string", "doc_value":"true"},
+        "body":{"type":"string", "doc_value":"true"},
+        "user_id":{
+          "type":"string",
+          "index":"not_analyzed",
+          "doc_value":"true"
+        },
+        "created":{
+          "type":"date",
+          "doc_value":"true",
+          "format":"strict_date_optional_time||epoch_millis"
+        }
+      }
+    },
+    "location":{
+      "properties":{
+        "user_id":{
+          "type":"string",
+          "index":"not_analyzed",
+          "doc_value":"true"
+        },
+        "geo":{
+          "type":"geo_point",
+          "doc_value":"true"
+        }
+      }
+    }
+  }
+}
