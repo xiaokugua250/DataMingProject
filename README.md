@@ -28,8 +28,7 @@
 ###dmp工程
 - es介绍
 es 为Elasticsearch[ES官网](https://www.elastic.co/products/elasticsearch)是一个基于Apache Lucene(TM)的开源搜索引擎。
-无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。
-在dmp工程项目中一般用于企业级搜索方案的构建，其本身强大的搜索引擎功能和分布式功能可以快速准确的进行大量数据的快速搜索。
+无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。在dmp工程项目中一般用于企业级搜索方案的构建，其本身强大的搜索引擎功能和分布式功能可以快速准确的进行大量数据的快速搜索。
 在本代码库中采用Java ES接口，当前代码有cluster、client、Node管理、CRUD操作、Search操作等
 
 
