@@ -11,6 +11,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.api.java.function.VoidFunction;
 import scala.Tuple2;
 
 import java.util.Arrays;
@@ -71,6 +72,13 @@ public class sparkWordCountDemo {
             }
         });
 
+        //循环输出 或其他自定义操作
+       /* counts.foreach(new VoidFunction<Tuple2<String, Integer>>() {
+            public void call(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
+                System.out.println("stringIntegerTuple2._1()+\":\"+stringIntegerTuple2._2() = " + stringIntegerTuple2._1()+":"+stringIntegerTuple2._2());
+            }
+        });*/
+
 
         counts.saveAsTextFile(output);
         //save as textfile
@@ -93,6 +101,19 @@ public class sparkWordCountDemo {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     *
+     * @param javaSparkContext
+     */
+    public static void closeSpark(JavaSparkContext javaSparkContext){
+        try {
+            javaSparkContext.close();
+        } finally {
+            javaSparkContext.close();
         }
     }
 

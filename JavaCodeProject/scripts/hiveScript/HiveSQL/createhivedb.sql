@@ -7,7 +7,7 @@ CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name
 create DATABASE IF NOT EXISTS dmpDB
 COMMENT "dmp project hive db"
 LOCATION ${HIVE_HOME}
-WITH DBPROPERTIES ("creator="morty",data="2016-5-17");
+WITH DBPROPERTIES ("creator"="morty","data="2016-5-17");
 
 --- describe database dmpDB;
 

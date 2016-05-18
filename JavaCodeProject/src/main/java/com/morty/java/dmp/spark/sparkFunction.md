@@ -1,3 +1,9 @@
+# Spark 资料
+## 资料与文档集
+- [spark官方文档](http://spark.apache.org/)
+- [csdn spark](http://spark.csdn.net/)
+- [codexiu](http://www.codexiu.cn/spark/2/)
+
 ##spark operations
 
 ###spark Transformations

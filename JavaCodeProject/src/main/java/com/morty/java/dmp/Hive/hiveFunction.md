@@ -1,5 +1,11 @@
-## Hive函数大全 目录：
-
+# 目录：
+## Hive文档资料
+- [Hivewiki](https://cwiki.apache.org/confluence/display/Hive/Home) 官方参考
+- [csdn博客](http://blog.csdn.net/u010376788/article/category/6053411)
+- [HIVE教程](http://www.phperz.com/special/20.html)
+- [hive自定义函数](https://github.com/delongwu/techdoc/wiki/HIVE-UDF%E5%87%BD%E6%95%B0%E7%BC%96%E5%86%99)
+- [hive api](https://cwiki.apache.org/confluence/display/Hive/Hive+APIs+Overview)
+## Hive函数大全
 ### 一、关系运算：
 1. 等值比较: =
 2. 等值比较:<=>
