@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="085d10c0-c9c6-42d3-8cf9-a751e7ade4a4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/JavaCodeProject/scripts/hiveScript/HiveSQL/createhivedb.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JavaCodeProject/.idea/workspace.xml" afterPath="$PROJECT_DIR$/JavaCodeProject/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/JavaCodeProject/scripts/hiveScript/HiveSQL/createtable.hql" afterPath="$PROJECT_DIR$/JavaCodeProject/scripts/hiveScript/HiveSQL/hiveScriptReadMe.md" />
     </list>
     <ignored path="DataMingProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -774,12 +777,12 @@
       <workItem from="1463200768809" duration="69000" />
       <workItem from="1463216853168" duration="21000" />
       <workItem from="1463365154685" duration="83000" />
-      <workItem from="1463475231701" duration="225000" />
+      <workItem from="1463475231701" duration="637000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="572000" />
+    <option name="totallyTimeSpent" value="984000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-243" width="1936" height="1056" extended-state="6" />
