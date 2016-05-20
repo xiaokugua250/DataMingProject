@@ -16,6 +16,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -176,6 +178,38 @@ public class esSearchOpt {
         }
     }
 
+
+
+
+    /**
+     *  agg 查询
+     * @param query
+     * @param aggregationBuilder
+     */
+    public void aggSearch(String query, AggregationBuilder aggregationBuilder){
+        SearchResponse searchResponse;
+        searchResponse = client.prepareSearch()
+                .setQuery(query)
+                .addAggregation(aggregationBuilder)
+                .execute()
+                .actionGet();
+    }
+
+
+    /**
+     *  AggregationsBuilders 构建aggregationbuilde来设置agg查询参数
+     * @param parmas
+     * @return
+     */
+
+    public AggregationBuilder getAggregationBuider(String ... parmas){
+        AggregationBuilder aggregationBuilder=null;
+        aggregationBuilder=AggregationBuilders
+                .terms(parmas[0])
+                .field(parmas[1])
+                .include(parmas[2]);
+        return aggregationBuilder;
+    }
 
 
 }
