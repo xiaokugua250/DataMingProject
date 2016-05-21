@@ -25,6 +25,14 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
@@ -59,6 +67,39 @@
             <artifactId>spark-core_2.10</artifactId>
             <version>1.6.1</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
+    <![CDATA[
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+    ]]>
+        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase</artifactId>
+            <version>0.98.5-hadoop2</version>
+            <type>pom</type>
+        </dependency>
+
+
+        <!-- http://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.6</version>
+            <type>pom</type>
+        </dependency>
+
+
 
         <!-- http://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>

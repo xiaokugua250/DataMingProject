@@ -1,0 +1,18 @@
+## hive 脚本操作
+### 注意
+- 在执行之前可将脚本后缀.sql 修改为.hql 如 createtable.sql ---> createtable.hql
+### 包含内容说明
+- 创建数据库
+- 创建数据表
+- 定义数据表
+- 数据导入导出
+- 数据分析
+- hive函数操作
+#### Hive DDL
+- CREATE DATABASE/SCHEMA, TABLE, VIEW, FUNCTION, INDEX
+- DROP DATABASE/SCHEMA, TABLE, VIEW, INDEX
+- TRUNCATE TABLE
+- ALTER DATABASE/SCHEMA, TABLE, VIEW
+- MSCK REPAIR TABLE (or ALTER TABLE RECOVER PARTITIONS)
+- SHOW DATABASES/SCHEMAS, TABLES, TBLPROPERTIES, PARTITIONS, FUNCTIONS, INDEX[ES], COLUMNS, CREATE TABLE
+- DESCRIBE DATABASE/SCHEMA, table_name, view_name
