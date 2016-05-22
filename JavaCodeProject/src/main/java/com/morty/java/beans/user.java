@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by morty on 2016/05/17.
  */
-public class user implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = -407588917216956565L;
 
@@ -18,7 +18,16 @@ public class user implements Serializable {
     private String city;
     private String street;
     private Long postCode;
+    private String job;
+    private String shcool;
+    private String qqCount;
+    private String webChat;
+    private String email;
+    private String company;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public String getCompany() {
         return company;
@@ -67,13 +76,6 @@ public class user implements Serializable {
     public void setWebChat(String webChat) {
         this.webChat = webChat;
     }
-
-    private String job;
-    private String shcool;
-    private String qqCount;
-    private String webChat;
-    private String email;
-    private String company;
 
     public int getAge() {
         return age;
@@ -137,10 +139,6 @@ public class user implements Serializable {
 
     public void setProvince(String province) {
         this.province = province;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getStreet() {

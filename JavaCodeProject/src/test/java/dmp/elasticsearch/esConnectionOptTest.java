@@ -1,6 +1,6 @@
 package dmp.elasticsearch;
 
-import com.morty.java.dmp.elasticsearch.esConnectionOpt;
+import com.morty.java.dmp.elasticsearch.EsConnectionOpt;
 import org.junit.Test;
 
 /**
@@ -10,7 +10,7 @@ import org.junit.Test;
 public class esConnectionOptTest {
     @Test
     public void esConnectionOptTest(){
-        esConnectionOpt opt=new esConnectionOpt();
+        EsConnectionOpt opt = new EsConnectionOpt();
         opt.getClient(true);
     }
 

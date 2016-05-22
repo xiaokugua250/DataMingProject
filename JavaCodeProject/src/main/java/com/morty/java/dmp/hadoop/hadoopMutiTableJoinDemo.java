@@ -3,8 +3,8 @@ package com.morty.java.dmp.hadoop;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
@@ -47,8 +47,28 @@ import java.util.StringTokenizer;
  所以可以采用和单表关联的相同的处理方式，map识别出输入的行属于哪个表之后，对其进行分割，将连接的列值保存在key中，另一列和左右表标识保存在value中，然后输出。
  reduce拿到连接结果之后，解析value内容，根据标志将左右表内容分开存放，然后求笛卡尔积，最后直接输出。
  */
-public class hadoopMutiTableJoinDemo {
+public class HadoopMutiTableJoinDemo {
     public static int time=0;
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        Configuration conf=new Configuration();
+        GenericOptionsParser optionsParser=new GenericOptionsParser(conf,args);
+        String[] remainingArgs=optionsParser.getRemainingArgs();
+        if (remainingArgs.length != 2) {
+            System.err.println("Usage: Muti Table Join <in> <out>");
+            System.exit(2);
+        }
+        org.apache.hadoop.mapreduce.Job job= org.apache.hadoop.mapreduce.Job.getInstance(conf,"MutiTableJoin");
+        job.setJarByClass(HadoopMutiTableJoinDemo.class);
+        job.setMapperClass(Map.class);
+        job.setReducerClass(Reduce.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
+
+        FileInputFormat.addInputPath(job,new Path(remainingArgs[0]));
+        org.apache.hadoop.mapreduce.lib.output.FileOutputFormat.setOutputPath(job,new Path(remainingArgs[1]));
+        System.exit(job.waitForCompletion(true) ? 0 :1);
+    }
 
     public static class Map extends Mapper<Object,Text,Text,Text>{
         @Override
@@ -113,25 +133,5 @@ public class hadoopMutiTableJoinDemo {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        Configuration conf=new Configuration();
-        GenericOptionsParser optionsParser=new GenericOptionsParser(conf,args);
-        String[] remainingArgs=optionsParser.getRemainingArgs();
-        if (remainingArgs.length != 2) {
-            System.err.println("Usage: Muti Table Join <in> <out>");
-            System.exit(2);
-        }
-        org.apache.hadoop.mapreduce.Job job= org.apache.hadoop.mapreduce.Job.getInstance(conf,"MutiTableJoin");
-        job.setJarByClass(hadoopMutiTableJoinDemo.class);
-        job.setMapperClass(Map.class);
-        job.setReducerClass(Reduce.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
-
-        FileInputFormat.addInputPath(job,new Path(remainingArgs[0]));
-        org.apache.hadoop.mapreduce.lib.output.FileOutputFormat.setOutputPath(job,new Path(remainingArgs[1]));
-        System.exit(job.waitForCompletion(true) ? 0 :1);
     }
 }

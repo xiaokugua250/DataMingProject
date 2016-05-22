@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>MortiesJavaProject</groupId>
     <artifactId>com.hudongpai.morty.java.j2seProject</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+
     <build>
         <outputDirectory>target/scala-${scala.binary.version}/classes</outputDirectory>
         <testOutputDirectory>target/scala-${scala.binary.version}/test-classes</testOutputDirectory>
@@ -68,14 +70,16 @@
             <version>1.6.1</version>
         </dependency>
         <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
-    <![CDATA[
+        <![CDATA[
+
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase</artifactId>
             <version>2.0.0-SNAPSHOT</version>
             <type>pom</type>
         </dependency>
-    ]]>
+]]>
+
         <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
         <dependency>
             <groupId>org.apache.hbase</groupId>

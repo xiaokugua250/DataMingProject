@@ -1,10 +1,7 @@
 package com.morty.java.dmp.elasticsearch;
 
-import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
-import groovy.json.JsonBuilder;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.fieldstats.FieldStats;
 import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -18,9 +15,6 @@ import org.elasticsearch.node.Node;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.SortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.Date;
@@ -33,20 +27,20 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 /**
  * Created by Administrator on 2016/05/13.
  */
-public class esSearchOpt {
+public class EsSearchOpt {
+    public static org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(EsConnectionOpt.class);
     public Client client;
-    BulkRequestBuilder bulkRequestBuilder;
     public SearchRequestBuilder builder;    //ES查询条件Builder
     public QueryBuilder queryBuilder;
-    SearchResponse scrollResp;
     public  Settings settings;          //ES Settings
+    BulkRequestBuilder bulkRequestBuilder;
+    SearchResponse scrollResp;
 
-    public static org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(esConnectionOpt.class);
     public void init(){
-        client=esDescribeInfo.getClient(true);
+        client= EsDescribeInfo.getClient(true);
         bulkRequestBuilder=client.prepareBulk();
         Properties properties=new Properties();
-        properties.put("cluster.name",esDescribeInfo.ES_CLUSTER_NAME);
+        properties.put("cluster.name", EsDescribeInfo.ES_CLUSTER_NAME);
         properties.put("client.transport.sniff", "true");// 自动嗅探整个集群的状态,es会自动把集群中其它机器的ip地址加到客户端中
         settings= Settings.settingsBuilder().put(properties).build();
 
@@ -94,8 +88,8 @@ public class esSearchOpt {
      * @return
      */
     public SearchRequestBuilder getESQueryBuider(){
-        builder=client.prepareSearch(esDescribeInfo.ES_INDEX_NMAE);     //搜索Index
-        builder.setTypes(esDescribeInfo.ES_TYPE_NAME);      //搜索Type
+        builder=client.prepareSearch(EsDescribeInfo.ES_INDEX_NMAE);     //搜索Index
+        builder.setTypes(EsDescribeInfo.ES_TYPE_NAME);      //搜索Type
         builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);  //搜索类型
         //TODO 设置查询条件,builder.setXXX
         /* builder.setQuery(QueryBuilders.matchQuery("wareName","30liuliang"));// 设置查询条件

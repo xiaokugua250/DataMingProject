@@ -13,7 +13,7 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 /**
  * Created by Administrator on 2016/05/13.
  */
-public class esTypeOpt {
+public class EsTypeOpt {
     public PutIndexedScriptResponse putIndexedScriptResponse;
     public GetIndexedScriptResponse getIndexedScriptResponse;
     public DeleteIndexedScriptResponse deleteIndexedScriptResponse;

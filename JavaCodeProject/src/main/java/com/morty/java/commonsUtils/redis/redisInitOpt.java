@@ -1,46 +1,28 @@
 package com.morty.java.commonsUtils.redis;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.SerializationUtils;
-import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.SortingParams;
 
-import java.io.ObjectOutputStream;
-import java.util.*;
-
-import static javafx.scene.input.KeyCode.T;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * Created by duliang on 2016/5/14.
  */
-public class redisInitOpt {
-    static Logger LOG=Logger.getLogger(redisInitOpt.class);
+public class RedisInitOpt {
+    static Logger LOG=Logger.getLogger(RedisInitOpt.class);
 
     private static  Jedis jedis;
     private static JedisPool pool;
     public JedisPoolConfig config;
     public ResourceBundle bundle;
 
-
-
-    public void init(){
-
-        bundle=ResourceBundle.getBundle("redis-commons");
-        if(bundle == null){
-            throw new IllegalArgumentException("redis.propertis is not found");
-        }
-        //TODO redis 配置信息
-        config=new JedisPoolConfig();
-        config.setMaxIdle(Integer.valueOf(bundle.getString("reids.pool.maxIdle")));
-        config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
-        config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
-        pool=new JedisPool(new JedisPoolConfig(),redisInfo.HOST,redisInfo.PORT);
-
-    }
     /**
      * 获取Redis 是否采用池的方式获取
      * @param isPool
@@ -63,6 +45,22 @@ public class redisInitOpt {
         }
 
     }
+
+    public void init(){
+
+        bundle=ResourceBundle.getBundle("redis-commons");
+        if(bundle == null){
+            throw new IllegalArgumentException("redis.propertis is not found");
+        }
+        //TODO redis 配置信息
+        config=new JedisPoolConfig();
+        config.setMaxIdle(Integer.valueOf(bundle.getString("reids.pool.maxIdle")));
+        config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
+        config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
+        pool=new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
+
+    }
+
     /**
      *
      * @param key
@@ -85,7 +83,7 @@ public class redisInitOpt {
      * @param obj
      * @param jedis
      */
-    public void ObjectRedis(beans<String> obj,Jedis jedis){
+    public void ObjectRedis(Beans<String> obj, Jedis jedis){
 
         jedis.flushDB();
         byte[] objBytes=SerializationUtils.serialize(obj);  //序列化

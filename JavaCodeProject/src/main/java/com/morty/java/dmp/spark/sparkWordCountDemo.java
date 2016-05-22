@@ -1,8 +1,5 @@
 package com.morty.java.dmp.spark;
 
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -11,7 +8,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.api.java.function.VoidFunction;
 import scala.Tuple2;
 
 import java.util.Arrays;
@@ -20,12 +16,12 @@ import java.util.ResourceBundle;
 /**
  * Created by duliang on 2016/5/15.
  */
-public class sparkWordCountDemo {
+public class SparkWordCountDemo {
 
-    Logger LOG=Logger.getLogger(sparkWordCountDemo.class);
     private static SparkConf conf;
     private static  ResourceBundle bundle;
     private static JavaSparkContext javaSparkContext;
+
      static{
         try{
             bundle= ResourceBundle.getBundle("spark-configuration");
@@ -42,6 +38,7 @@ public class sparkWordCountDemo {
         }
     }
 
+    Logger LOG=Logger.getLogger(SparkWordCountDemo.class);
 
     /**
      *

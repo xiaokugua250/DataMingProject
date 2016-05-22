@@ -1,6 +1,6 @@
 package dmp.elasticsearch.tools;
 
-import com.morty.java.dmp.elasticsearch.utilsTool;
+import com.morty.java.dmp.elasticsearch.UtilsTool;
 import junit.framework.TestCase;
 
 /**
@@ -8,6 +8,6 @@ import junit.framework.TestCase;
  */
 public class utilsToolTest  extends TestCase{
     public void testmutiArgs(){
-      new utilsTool().mutiArgs("hello","word");
+        new UtilsTool().mutiArgs("hello", "word");
     }
 }

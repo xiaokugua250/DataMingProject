@@ -3,7 +3,7 @@ package com.morty.java.dmp.elasticsearch;
 /**
  * Created by Administrator on 2016/05/13.
  */
-public class utilsTool {
+public class UtilsTool {
     @Override
     public String toString() {
         return super.toString();

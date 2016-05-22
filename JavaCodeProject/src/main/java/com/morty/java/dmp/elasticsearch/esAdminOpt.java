@@ -8,7 +8,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
-import org.elasticsearch.cluster.health.ClusterIndexHealth;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.translog.Translog;
@@ -17,15 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import static com.morty.java.dmp.elasticsearch.esAdminOpt.refreshType.ALL;
-import static com.morty.java.dmp.elasticsearch.esAdminOpt.refreshType.ONE;
+import static com.morty.java.dmp.elasticsearch.EsAdminOpt.refreshType.ALL;
 
 /**
  * Created by Administrator on 2016/05/13.
  *
  * ES Administration Operation
  */
-public class esAdminOpt {
+public class EsAdminOpt {
     public Client client;
     public  AdminClient adminClient;
     public IndicesAdminClient indicesAdminClient;
@@ -34,14 +32,13 @@ public class esAdminOpt {
     public Properties properties;
     public GetSettingsResponse getSettingsResponse;
     public ClusterHealthResponse clusterHealthResponse;
-    public  enum  refreshType {ONE, ALL, MANY}    //刷新类型
+
     // TODO INIT OPERATION
     public void init(){
         properties.put("index.number_of_shareds",3);
         properties.put("index_number_of_replicas",2);
 
     }
-
 
     /**
      * AdminClient adminClient = client.admin();
@@ -70,6 +67,7 @@ public class esAdminOpt {
         }
         return null;
     }
+
     /**
      * clusterAdminClient clusterAdminClient=  client.admin().cluster();
      * @return
@@ -155,6 +153,7 @@ public class esAdminOpt {
         }
         return settingMap;
     }
+
     //-----------------------------------Cluster Admin-----------------------------------------
     public Object getClusterInfo(String ...indexs){
         Map<String,Object> cluserMap=new HashMap<String, Object>();
@@ -197,6 +196,8 @@ public class esAdminOpt {
             throw new RuntimeException("Index is in"+clusterHealthStatus+" status ");
         }
     }
+
+    public  enum  refreshType {ONE, ALL, MANY}    //刷新类型
 
 
 }

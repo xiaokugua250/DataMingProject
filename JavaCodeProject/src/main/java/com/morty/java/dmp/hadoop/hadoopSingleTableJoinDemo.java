@@ -6,9 +6,7 @@ package com.morty.java.dmp.hadoop;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileOutputFormat;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -32,8 +30,28 @@ import java.util.Iterator;
  要连接的是左表的parent列和右表的child列，且左表和右表是同一个表，所以在map阶段将读入数据分割成child和parent之后，会将parent设置成key，child设置成value进行输出，并作为左表；再将同一对child和parent中的child设置成key，parent设置成value进行输出，作为右表。为了区分输出中的左右表，需要在输出的value中再加上左右表的信息，比如在value的String最开始处加上字符1表示左表，加上字符2表示右表。这样在map的结果中就形成了左表和右表，然后在shuffle过程中完成连接。reduce接收到连接的结果，其中每个key的value-list就包含了"grandchild--grandparent"关系。
  取出每个key的value-list进行解析，将左表中的child放入一个数组，右表中的parent放入一个数组，然后对两个数组求笛卡尔积就是最后的结果了
  */
-public class hadoopSingleTableJoinDemo {
+public class HadoopSingleTableJoinDemo {
     public static int time=0;
+
+    public static void main(String[] args) throws  Exception {
+        Configuration conf=new Configuration();
+        GenericOptionsParser optionsParser=new GenericOptionsParser(conf,args);
+        String[] remainingArgs=optionsParser.getRemainingArgs();
+        if (remainingArgs.length != 2) {
+            System.err.println("Usage: Single Table Join <in> <out>");
+            System.exit(2);
+        }
+        org.apache.hadoop.mapreduce.Job job= org.apache.hadoop.mapreduce.Job.getInstance(conf,"singleTableJoin");
+        job.setJarByClass(HadoopSingleTableJoinDemo.class);
+        job.setMapperClass(Map.class);
+        job.setReducerClass(Reduce.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
+
+        FileInputFormat.addInputPath(job,new Path(remainingArgs[0]));
+        org.apache.hadoop.mapreduce.lib.output.FileOutputFormat.setOutputPath(job,new Path(remainingArgs[1]));
+        System.exit(job.waitForCompletion(true) ? 0 :1);
+    }
 
     public static class Map extends Mapper<Object,Text,Text,Text>{
         @Override
@@ -78,27 +96,6 @@ public class hadoopSingleTableJoinDemo {
                 }
             }
         }
-    }
-
-
-    public static void main(String[] args) throws  Exception {
-        Configuration conf=new Configuration();
-        GenericOptionsParser optionsParser=new GenericOptionsParser(conf,args);
-        String[] remainingArgs=optionsParser.getRemainingArgs();
-        if (remainingArgs.length != 2) {
-            System.err.println("Usage: Single Table Join <in> <out>");
-            System.exit(2);
-        }
-        org.apache.hadoop.mapreduce.Job job= org.apache.hadoop.mapreduce.Job.getInstance(conf,"singleTableJoin");
-        job.setJarByClass(hadoopSingleTableJoinDemo.class);
-        job.setMapperClass(Map.class);
-        job.setReducerClass(Reduce.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
-
-        FileInputFormat.addInputPath(job,new Path(remainingArgs[0]));
-        org.apache.hadoop.mapreduce.lib.output.FileOutputFormat.setOutputPath(job,new Path(remainingArgs[1]));
-        System.exit(job.waitForCompletion(true) ? 0 :1);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.morty.java.dmp.elasticsearch;
 
-import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -13,7 +12,7 @@ import java.util.Properties;
 /**
  * Created by Administrator on 2016/05/12.
  */
-public class esDescribeInfo {
+public class EsDescribeInfo {
     public static final String ES_CLUSTER_NAME="Elasticsearch"; //集群名称
     public static final String ES_INDEX_NMAE="ds-yili-v4"; //索引 名称
     public static final String ES_TYPE_NAME="ds-yili-v4";
@@ -29,7 +28,7 @@ public class esDescribeInfo {
 
     public static  void init(){
         Properties properties=new Properties();
-        properties.put("cluster.name",esDescribeInfo.ES_CLUSTER_NAME);
+        properties.put("cluster.name", EsDescribeInfo.ES_CLUSTER_NAME);
         properties.put("client.transport.sniff", "true");// 自动嗅探整个集群的状态,es会自动把集群中其它机器的ip地址加到客户端中
         settings= Settings.settingsBuilder().put(properties).build();
 
@@ -40,8 +39,8 @@ public class esDescribeInfo {
              try {
                  if(isDefault == false) {
                      client = TransportClient.builder().build().
-                             addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(esDescribeInfo.HOST_1), esDescribeInfo.PORT))
-                             .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(esDescribeInfo.HOST_2), esDescribeInfo.PORT));
+                             addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(EsDescribeInfo.HOST_1), EsDescribeInfo.PORT))
+                             .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(EsDescribeInfo.HOST_2), EsDescribeInfo.PORT));
                  }else {
                     client=TransportClient.builder().settings(settings).build();
                  }

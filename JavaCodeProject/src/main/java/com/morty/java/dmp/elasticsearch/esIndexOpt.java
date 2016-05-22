@@ -10,7 +10,7 @@ import org.elasticsearch.client.Client;
  *
  * ES index script api
  */
-public class esIndexOpt {
+public class EsIndexOpt {
     PutIndexedScriptResponse putIndexedScriptResponse;
     GetIndexedScriptResponse getIndexedScriptResponse;
     DeleteIndexedScriptResponse deleteIndexedScriptResponse;

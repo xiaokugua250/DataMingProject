@@ -2,25 +2,25 @@ package com.morty.java.dmp.hdfs;
 
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.*;
+import org.apache.hadoop.fs.BlockLocation;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.util.ReflectionUtils;
-import org.apache.lucene.util.OfflineSorter;
 
 import java.io.*;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import static com.morty.java.dmp.hdfs.fsInfo.*;
+import static com.morty.java.dmp.hdfs.FSInfo.DATA_SOURCE_URI;
 import static org.apache.hadoop.io.SequenceFile.CompressionType.BLOCK;
 
 /**
  * Created by duliang on 2016/5/13.
  */
-public class fsReadWriteOpt {
+public class FSReadWriteOpt {
 
     public Configuration conf;
     FileSystem fileSystem;

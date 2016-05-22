@@ -1,26 +1,16 @@
 package com.morty.java.dmp.elasticsearch;
 
-import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.Logger;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-
-import java.util.Collection;
-import java.util.Map;
-
-import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
-import static org.elasticsearch.search.aggregations.AggregationBuilders.terms;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 /**
  *
  * ES查询结果解析
  * Created by morty on 2016/05/20.
  */
-public class esParseOpt {
-    Logger LOG =Logger.getLogger(esParseOpt.class);
+public class EsParseOpt {
+    Logger LOG =Logger.getLogger(EsParseOpt.class);
 
     //todo init
     public void init(){

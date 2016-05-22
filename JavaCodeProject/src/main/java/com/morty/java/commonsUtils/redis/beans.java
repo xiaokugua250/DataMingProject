@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by duliang on 2016/5/15.
  */
-public class beans <T extends  Object> implements Serializable {
+public class Beans<T extends Object> implements Serializable {
 
 
     private static final long serialVersionUID = -4459808615555206832L;

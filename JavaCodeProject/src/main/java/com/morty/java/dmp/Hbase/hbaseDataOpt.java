@@ -5,7 +5,6 @@ import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
-import scala.util.control.Exception;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -16,7 +15,7 @@ import java.util.List;
  *
  * data crud operation
  */
-public class hbaseDataOpt {
+public class HbaseDataOpt {
     public Configuration hbaseConfiguration;
     public void init(){
 

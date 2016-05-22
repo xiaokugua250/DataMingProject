@@ -3,17 +3,17 @@ package com.morty.java.dmp.Hbase;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.client.*;
 
 import java.io.IOException;
 
 /**
  * Created by duliang on 2016/5/21.
  */
-public class hbaseTableOpt {
+public class HbaseTableOpt {
 
     public Configuration hbaseConfiguration;
 
