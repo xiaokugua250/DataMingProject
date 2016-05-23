@@ -40,6 +40,11 @@ public class SparkWordCountDemo {
 
     Logger LOG=Logger.getLogger(SparkWordCountDemo.class);
 
+
+
+
+
+
     /**
      *
      * @param fileName
@@ -47,6 +52,16 @@ public class SparkWordCountDemo {
      */
     public static void  wordCountJava8(String fileName,String output){
 
+
+
+/*        //todo mapto pair  creating a pairRDD
+         PairFunction<String,String,String> keyData=new PairFunction<String, String, String>() {
+            public Tuple2<String, String> call(String s) throws Exception {
+                return new Tuple2<String, String>(s.split(" ")[0],s);
+            }
+        };
+        words.mapToPair(keyData);
+*/
         JavaRDD<String> input=javaSparkContext.textFile(fileName);
 
         JavaRDD<String> words=input.flatMap(new FlatMapFunction<String, String>() {
@@ -54,7 +69,6 @@ public class SparkWordCountDemo {
                 return Arrays.asList(s.split(" "));
             }
         });
-
         //Map
         JavaPairRDD<String,Integer> pairs=words.mapToPair(new PairFunction<String, String, Integer>() {
             public Tuple2<String, Integer> call(String s) throws Exception {
