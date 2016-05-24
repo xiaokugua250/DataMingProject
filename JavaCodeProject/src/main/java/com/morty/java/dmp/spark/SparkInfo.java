@@ -25,4 +25,15 @@ public  class SparkInfo {
                     "0 73.23.2.15 images.com 1358492557 - Whatup");
 
 
+    public static String HBASE_ROOTDIR = "hdfs://dev:port/hbase";
+
+    public static String ZKQUORUM = "zkHost";
+
+    public static String HBASEOUTTABLE = "hbase_out_table";
+
+    public static String COLFAMILY = "HBASE_COLFAMLIY";
+
+    public static String COL_1 = "HBASE_COL_1";
+
+    public static String COL_2 = "HBASE_COL_2";
 }

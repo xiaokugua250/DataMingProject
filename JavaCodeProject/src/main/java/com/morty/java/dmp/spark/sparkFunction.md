@@ -4,9 +4,9 @@
 - [csdn spark](http://spark.csdn.net/)
 - [codexiu](http://www.codexiu.cn/spark/2/)
 
-##spark operations
+## spark operations
 
-###spark Transformations
+### spark Transformations
 - reduceByKey(function) combines values with the same key using the provided function.
 - groupByKey() maps unique keys to an array of values assigned to that key.
 - combineByKey() combines values with the same key, but uses a different result type.
@@ -74,3 +74,9 @@ The following steps summarize the execution model for distributed Spark applicat
 5. The driver runs and sends tasks to the executors.
 6. The executors run the tasks and sends the results back to the driver.
 7. The driver completes its execution, stops the Spark context, and the resources managed by the cluster manager are released.
+
+
+### Spark调度过程
+作业调度的基本工作流程是提交作业相关操作-〉拆分 Stage-〉生成作业-〉提交任务集-〉提交任务-〉任务执行-〉跟踪结果。
+从这个过程可以看出，每个作业从提交到完成，都要经历多个步骤，拆分成以任务为最小单位，按照一定的逻辑依赖关系依次提交执行，并返回结果。
+如果从具体类模块角度来看，整个过程经历了 SparkContext-〉DAGScheduler-〉TaskScheduler-〉TaskSetManager。
