@@ -11,6 +11,7 @@ import org.apache.hadoop.hbase.mapreduce.TableOutputFormat;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
@@ -122,12 +123,20 @@ public class SparkHbaseOpt {
     /**
      * 保存数据到hbase
      *
-     * @param rddData
+     * @param
      */
-    public void load2Hbase(JavaRDD<Tuple3<Integer, Integer, Integer>> rddData) {
+    public void load2Hbase(JavaPairRDD<Tuple3<Integer, String, String>, String> javaPairRdd, JavaRDD javaRdd) {
         // TODO: 2016/05/25 方法存疑，需验证
-        rddData.saveAsObjectFile("dir/hbase/tablepath");
-
+        javaPairRdd.saveAsNewAPIHadoopDataset(conf);
+/*
+        javaPairRdd=javaRdd.mapToPair(new PairFunction() {
+            @Override
+            public Tuple2 call(Object o) throws Exception {
+                return null;
+            }
+        });
+        javaPairRdd.saveAsNewAPIHadoopDataset(conf);
     }
-
+*/
+    }
 }

@@ -31,8 +31,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 
@@ -69,10 +69,35 @@
             <artifactId>spark-core_2.10</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
 
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-sql_2.10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.10</artifactId>
+            <version>1.6.1</version>
+        </dependency>
 
-        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-streaming_2.10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.10</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-mllib_2.10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-mllib_2.10</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-hive_2.10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_2.10</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
         <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
         <dependency>
             <groupId>org.apache.hbase</groupId>
