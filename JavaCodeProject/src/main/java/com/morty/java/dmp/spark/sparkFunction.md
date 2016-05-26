@@ -3,7 +3,12 @@
 - [spark官方文档](http://spark.apache.org/)
 - [csdn spark](http://spark.csdn.net/)
 - [codexiu](http://www.codexiu.cn/spark/2/)
-
+- ### spark 优化资料
+- [将 Spark 中的文本转换为 Parquet 以提升性能](http://www.ibm.com/developerworks/cn/analytics/blog/ba-parquet-for-spark-sql/index.html)
+- [Spark SQL - Parquet Files](http://www.tutorialspoint.com/spark_sql/spark_sql_parquet_files.htm)
+- [Spark Parquet File](https://endymecy.gitbooks.io/spark-programming-guide-zh-cn/content/spark-sql/data-sources/parquet-files.html)
+- [A Powerful Big Data Trio: Spark, Parquet and Avro](http://zenfractal.com/2013/08/21/a-powerful-big-data-trio/)
+- [深入分析Parquet列式存储格式](http://www.infoq.com/cn/articles/in-depth-analysis-of-parquet-column-storage-format)
 ## spark operations
 
 ### spark Transformations

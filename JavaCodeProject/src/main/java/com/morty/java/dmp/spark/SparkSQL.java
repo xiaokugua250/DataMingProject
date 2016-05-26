@@ -7,9 +7,16 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -151,6 +158,14 @@ public class SparkSQL {
 
     }
 
+    /**
+     * 通过反射方式创建dataframe
+     *
+     * @param beanFile
+     * @param types
+     * @param params
+     * @return
+     */
     public DataFrame rdd2DFbyReflection(String beanFile, String types, String... params) {
         JavaRDD<User> user = javaSparkContext.textFile(beanFile)
                 .map(new Function<String, User>() {
@@ -163,6 +178,7 @@ public class SparkSQL {
                         user.setName(parts[1]);
                         user.setAge(Integer.parseInt(parts[2]));
                         user.setIncome(Double.parseDouble(parts[3]));
+                        user.setDescribe(parts[4]);
                         //....etc
                         return user;
                     }
@@ -190,6 +206,108 @@ public class SparkSQL {
         * */
 
     }
+
+    /**
+     * Create an RDD of Rows from the original RDD;
+     * Create the schema represented by a StructType matching the structure of Rows in the RDD created in Step 1.
+     * Apply the schema to the RDD of Rows via createDataFrame method provided by SQLContext.
+     *
+     * @return
+     */
+    public DataFrame rdd2DFbyProgram(String beanFile, String types, String... params) {
+
+        // Load a text file and convert each line to a JavaBean.
+        JavaRDD<String> user = javaSparkContext.textFile(beanFile);
+
+        // The schema is encoded in a string
+        String schemaString = "id name age income describe";
+
+        List<StructField> fields = new ArrayList<StructField>();
+        for (String fieldName : schemaString.split(" ")) {
+            fields.add(DataTypes.createStructField(fieldName, DataTypes.StringType, true));
+        }
+        StructType schema = DataTypes.createStructType(fields);
+
+        // Convert records of the RDD (people) to Rows.
+        JavaRDD<Row> rowRDD = user.map(new Function<String, Row>() {
+            @Override
+            public Row call(String record) throws Exception {
+                String[] fields = record.split(",");
+                return RowFactory.create(fields[0], fields[1], fields[2], fields[3], fields[4]);
+            }
+        });
+
+        DataFrame userDF = sqlContext.createDataFrame(rowRDD, schema);
+        return userDF;
+
+       /*
+       // Register the DataFrame as a table.
+       userDF.registerTempTable("user");
+        DataFrame results = sqlContext.sql("SELECT name FROM people");
+
+        // The results of SQL queries are DataFrames and support all the normal RDD operations.
+        // The columns of a row in the result can be accessed by ordinal.
+        List<String> names = results.javaRDD().map(new Function<Row, String>() {
+            public String call(Row row) {
+                return "Name: " + row.getString(0);
+            }
+        }).collect();
+        */
+
+    }
+
+    /**
+     * 加载parquet数据类型
+     *
+     * @param parquetPath
+     * @param params
+     * @return
+     */
+    public DataFrame getParquetData(String parquetPath, String... params) {
+
+        DataFrame dataFrame = sqlContext.read().load(parquetPath);
+        return dataFrame;
+    }
+
+    /**
+     * 保存dataframe
+     *
+     * @param dataFrame
+     * @param target
+     * @param params
+     */
+    public void saveDataFrame(DataFrame dataFrame, String target, String... params) {
+        // TODO: 2016/05/26  请详细查看API操作，注如可设置保存mode 
+        if (target.equals("parquet")) {
+            dataFrame.write().parquet(target);
+        }
+    }
+
+    /**
+     * spark sql 操作hive
+     *
+     * @param sql
+     */
+    public void hiveDataOpt(String sql) {
+        // TODO: 2016/05/26 注意hive环境配置 
+        hiveContext = new HiveContext(sqlContext.sparkContext());
+        hiveContext.sql(sql);
+    }
+
+    /**
+     * jdbc 获取dataframe
+     *
+     * @param url
+     * @param tableName
+     * @param properties
+     * @return
+     */
+    public DataFrame getDataByJdbc(String url, String tableName, Properties properties) {
+        // TODO: 2016/05/26 注意jdbc配置 
+        DataFrame jdbcDF = sqlContext.read().jdbc(url, tableName, properties);
+        return jdbcDF;
+    }
+
 
 
 }
