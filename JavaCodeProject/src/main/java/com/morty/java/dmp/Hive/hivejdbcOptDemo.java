@@ -14,9 +14,9 @@ public class HivejdbcOptDemo {
 
     public static void init(){
         properties=new Properties();
-        properties.put("user", Hiveinfo.hiveuser);
-        properties.put("password", Hiveinfo.hivepassword);
-        properties.put("table", Hiveinfo.hiveTableName);
+        properties.put("user", HiveInfo.hiveuser);
+        properties.put("password", HiveInfo.hivepassword);
+        properties.put("table", HiveInfo.hiveTableName);
     }
     /**
      *
@@ -27,8 +27,8 @@ public class HivejdbcOptDemo {
      */
     public static boolean getConnect(String driver,String user,String password){
         try {
-            Class.forName(Hiveinfo.hiveJdbcClientDriveName);
-            Connection connection = DriverManager.getConnection(Hiveinfo.hiveUri, properties);
+            Class.forName(HiveInfo.hiveJdbcClientDriveName);
+            Connection connection = DriverManager.getConnection(HiveInfo.hiveUri, properties);
             return true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
