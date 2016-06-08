@@ -8,9 +8,9 @@ import java.util.Properties;
 /**
  * Created by morty on 2016/05/18.
  */
-public class HiveJdbcOptDemo {
+public class HivejdbcOptDemo {
     static Properties properties;
-    Logger LOG = Logger.getLogger(HiveJdbcOptDemo.class);
+    Logger LOG = Logger.getLogger(HivejdbcOptDemo.class);
 
     public static void init(){
         properties=new Properties();
@@ -36,6 +36,21 @@ public class HiveJdbcOptDemo {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     *
+     * @param connection
+     * @return
+     */
+    public Statement getStatement(Connection connection){
+        try {
+            Statement statement=connection.createStatement();
+            return statement;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

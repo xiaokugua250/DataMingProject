@@ -1,6 +1,6 @@
 package com.morty.java.dmp.elasticsearch.aggs;
 
-public class DateAgg extends YiliAggsEntity {
+public class DateAgg extends EsAggsEntity {
 
     private String intervalStr = "day";
     private String offsetStr = "+0d";
@@ -10,7 +10,7 @@ public class DateAgg extends YiliAggsEntity {
         setIntervalStr(intervalStr);
         setOffsetStr(offsetStr);
         setAggSize(aggSize);
-        setAggType(YiliAggsEntity.DATE_TYPE);
+        setAggType(EsAggsEntity.DATE_TYPE);
     }
     
     public String getIntervalStr() {

@@ -31,8 +31,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 
@@ -69,29 +69,47 @@
             <artifactId>spark-core_2.10</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
-        <![CDATA[
 
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-sql_2.10 -->
         <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <type>pom</type>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.10</artifactId>
+            <version>1.6.1</version>
         </dependency>
-]]>
 
-        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-streaming_2.10 -->
         <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-client</artifactId>
-            <version>1.2.0</version>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.10</artifactId>
+            <version>1.6.1</version>
         </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-mllib_2.10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-mllib_2.10</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.apache.spark/spark-hive_2.10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_2.10</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
         <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase -->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase</artifactId>
             <version>0.98.5-hadoop2</version>
             <type>pom</type>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>1.1.2</version>
         </dependency>
 
 
@@ -129,11 +147,40 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
+
+        <!-- http://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
         <!-- http://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.7.3</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.hbase/hbase-server -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+
+        <!-- http://mvnrepository.com/artifact/org.apache.kafka/kafka_2.10 -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.10.0.0</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.10.0.0</version>
         </dependency>
 
     </dependencies>
