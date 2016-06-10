@@ -182,6 +182,44 @@
             <artifactId>kafka-clients</artifactId>
             <version>0.10.0.0</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.storm/storm-core -->
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-core</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.avro/avro -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.apache.pig/pig -->
+        <dependency>
+            <groupId>org.apache.pig</groupId>
+            <artifactId>pig</artifactId>
+            <version>0.15.0</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.sqoop/sqoop-core -->
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop-core</artifactId>
+            <version>1.99.6</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.oozie/oozie-core -->
+        <dependency>
+            <groupId>org.apache.oozie</groupId>
+            <artifactId>oozie-core</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
 
     </dependencies>
 
