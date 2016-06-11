@@ -2,11 +2,10 @@ package com.morty.java.dmp.hdfs;
 
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.BlockLocation;
-import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
+import org.apache.hadoop.util.Progressable;
 import org.apache.hadoop.util.ReflectionUtils;
 
 import java.io.*;
@@ -60,6 +59,7 @@ public class FSReadWriteOpt {
     public void fsCat(String dataUri){
         try {
             inputStream=fileSystem.open(new Path(dataUri));
+
             IOUtils.copyBytes(inputStream,System.out,4096,false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,6 +69,27 @@ public class FSReadWriteOpt {
 
     }
 
+    /**
+     * 获取fsdatainputStream
+     *
+     * @param fileSystem
+     * @param path
+     * @param params
+     * @return
+     */
+    public FSDataInputStream getFsStream(FileSystem fileSystem, Path path, String... params) {
+        FSDataInputStream fsDataInputStream;
+        try {
+            fsDataInputStream = fileSystem.open(path);
+
+            //  fsDataInputStream.seek(station); 跳到文件位置
+            return fsDataInputStream;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
     /**
      * 文件复制
@@ -91,14 +112,67 @@ public class FSReadWriteOpt {
 
 
     /**
+     * 将数据流写入到指定位置
+     *
+     * @param inputStream
+     * @param des
+     * @param params
+     * @throws IOException
+     */
+    public void fsLoadData(InputStream inputStream, String des, String... params) throws IOException {
+        FileSystem fileSystem;
+        OutputStream outputStream = null;
+        try {
+            fileSystem = FileSystem.get(URI.create(des), conf);
+            outputStream = fileSystem.create(new Path(des), new Progressable() {
+                @Override
+                public void progress() {
+                    System.out.println(".");
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        IOUtils.copyBytes(inputStream, outputStream, 4096, true);
+
+    }
+
+    /**
+     * 写数据到fs
+     *
+     * @param fileSystem
+     * @param path
+     * @param bytes
+     * @param params
+     */
+    public void fsWtrite(FileSystem fileSystem, Path path, byte[] bytes, String... params) {
+        FSDataOutputStream fsoutputStream;
+        try {
+            fsoutputStream = fileSystem.create(path);
+            fsoutputStream.write(bytes);
+            fsoutputStream.flush();
+            fsoutputStream.hflush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * 获取文件块信息
      * @param source
      * @return
      */
-    public Object getfSLocation(String source){
+    public Object getfSAndBlockStats(String source){
 
         try {
             FileStatus fileStatus=fileSystem.getFileStatus(new Path(source));
+            //文件元数据
+            fileStatus.getAccessTime();
+            fileStatus.getBlockSize();
+            fileStatus.getModificationTime();
+            // ...等等
+
             BlockLocation[]  blockLocations=fileSystem.getFileBlockLocations(fileStatus,0,fileStatus.getLen());
 
             /*for(BlockLocation blockLocation: blockLocations){
@@ -113,6 +187,55 @@ public class FSReadWriteOpt {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+
+    /**
+     * 返回fs信息
+     *
+     * @param fileSystem
+     * @param path
+     * @param params
+     * @return
+     */
+    public FileStatus[] getFsStatus(FileSystem fileSystem, Path path, String... params) {
+        FileStatus[] fileStatus;
+
+        try {
+            fileStatus = fileSystem.listStatus(path);
+            return fileStatus;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    /**
+     * fsstatus 添加过滤
+     *
+     * @param fs
+     * @param fsPath
+     * @param regex
+     * @param params
+     * @return
+     */
+    public FileStatus[] pathFilterOpt(FileSystem fs, String fsPath, String regex, String... params) {
+        FileStatus[] fileStatus;
+        try {
+            fileStatus = fs.globStatus(new Path(fsPath), new PathFilter() {
+                @Override
+                public boolean accept(Path path) {
+                    return !path.toString().matches(regex);
+                }
+            });
+            return fileStatus;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 

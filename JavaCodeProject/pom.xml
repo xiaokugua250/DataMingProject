@@ -219,6 +219,12 @@
             <artifactId>oozie-core</artifactId>
             <version>4.2.0</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.sqoop/sqoop -->
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop</artifactId>
+            <version>1.4.5</version>
+        </dependency>
 
 
     </dependencies>

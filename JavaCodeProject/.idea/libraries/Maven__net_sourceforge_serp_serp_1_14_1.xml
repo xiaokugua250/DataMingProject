@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: net.sourceforge.serp:serp:1.14.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.m2/repository/net/sourceforge/serp/serp/1.14.1/serp-1.14.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.m2/repository/net/sourceforge/serp/serp/1.14.1/serp-1.14.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.m2/repository/net/sourceforge/serp/serp/1.14.1/serp-1.14.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
