@@ -22,20 +22,42 @@ public class SparkInfo {
                     "3.5.21022; .NET CLR 3.0.4506.2152; .NET CLR 1.0.3705; .NET CLR 1.1.4322; .NET CLR " +
                     "3.5.30729; Release=ARP)\" \"UD-1\" - \"image/jpeg\" \"whatever\" 0.352 \"-\" - \"\" 256 977 988 \"\" " +
                     "0 73.23.2.15 images.com 1358492557 - Whatup");
+    public static final int TF = 1;
+    public static final int IDF = 2;
+    public static final int WORD2VEC = 3;
+    public static final int COUNTVECTORIZER = 4;
+    public static final int TOKENZER = 5;
+    public static final int STOPWORDREMOVER = 6;
+    public static final int NGRAM = 7;
 
 
+    // TODO 参见
+    // http://spark.apache.org/docs/latest/ml-features.html
+    public static final int BINARIZER = 8;
+    public static final int PCA = 9;
+    public static final int POLYNOMIALEXPRASSION = 10;
+    public static final int DCT = 11;
+    public static final int STRINGINDEXER = 12;
+    public static final int INDEXTOSTRING = 13;
+    public static final int ONEHOTENCODEER = 14;
+    public static final int VECTORINDEXER = 15;
+    public static final int NORMAILIZER = 16;
+    public static final int STANDARDSCALER = 17;
+    public static final int MINMAXSCALER = 18;
+    public static final int BUCKERTIZER = 19;
+    public static final int ELEMNETTWISEPRODUCT = 20;
+    public static final int SQLTRANSFORMER = 21;
+    public static final int VECTORASSERMBLER = 22;
+    public static final int QUANLITIEDISCRETIZER = 23;
+    public static final int VECTORSLICER = 25;
+    public static final int RFORMAULA = 26;
+    public static final int CHISQSELECTOR = 27;
     public static String HDFS_FILE = "hdfs://dev:port/hdfs/data";
-
     public static String HBASE_ROOTDIR = "hdfs://dev:port/hbase";
-
     public static String ZKQUORUM = "zkHost";
-
     public static String HBASEOUTTABLE = "hbase_out_table";
-
     public static String COLFAMILY = "HBASE_COLFAMLIY";
-
     public static String COL_1 = "HBASE_COL_1";
-
     public static String COL_2 = "HBASE_COL_2";
 
 

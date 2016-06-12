@@ -286,7 +286,6 @@ for (Row r: results.select("features", "label", "myProbability", "prediction").c
         /* Make predictions on test data. model is the model with combination of parameters
              that performed best.
         */
-
         trainValidationModel.transform(testdf);
 
     }
