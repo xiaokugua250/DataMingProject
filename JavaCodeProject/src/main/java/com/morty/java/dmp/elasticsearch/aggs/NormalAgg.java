@@ -3,14 +3,14 @@ package com.morty.java.dmp.elasticsearch.aggs;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 
-public class NormalAgg extends YiliAggsEntity {
+public class NormalAgg extends EsAggsEntity {
 
     private AggregationBuilder aggregationBuilder;
 
     public NormalAgg(String aggName, int aggSize) {
         setAggName(aggName);
         setAggSize(aggSize);
-        setAggType(YiliAggsEntity.NORMAL_TYPE);
+        setAggType(EsAggsEntity.NORMAL_TYPE);
     }
 
     /**
@@ -24,10 +24,10 @@ public class NormalAgg extends YiliAggsEntity {
 
         if(include == true) {
             setIncludeStr(termsStr);
-            setAggType(YiliAggsEntity.INCLUDE_TYPE);
+            setAggType(EsAggsEntity.INCLUDE_TYPE);
         }else {
             setExcludeStr(termsStr);
-            setAggType(YiliAggsEntity.EXCLUDE_TYPE);
+            setAggType(EsAggsEntity.EXCLUDE_TYPE);
         }
     }
 

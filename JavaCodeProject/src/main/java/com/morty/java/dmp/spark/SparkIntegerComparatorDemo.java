@@ -3,7 +3,6 @@ package com.morty.java.dmp.spark;
 import java.util.Comparator;
 
 /**
- *
  * spark comparator demo
  * usage:rdd.sortByKey(comp)
  * Created by morty on 2016/05/23.

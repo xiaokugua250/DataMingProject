@@ -1,42 +1,38 @@
 package com.morty.java.dmp.spark;
 
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 
-import java.util.Map;
-
 /**
- *  pair-key average using combineByKey()
+ * pair-key average using combineByKey()
  * Created by morty on 2016/05/23.
  */
 public class SparkAvgByCombineByKey {
 
 
     //map
-    Function<Integer,SparkAvgCount> createAcc=new Function<Integer, SparkAvgCount>() {
+    Function<Integer, SparkAvgCount> createAcc = new Function<Integer, SparkAvgCount>() {
         public SparkAvgCount call(Integer v1) throws Exception {
-            return new SparkAvgCount(v1,1);
+            return new SparkAvgCount(v1, 1);
         }
     };
 
 
     //merge
-    Function2<SparkAvgCount,Integer,SparkAvgCount> addAndCount=new Function2<SparkAvgCount, Integer, SparkAvgCount>() {
+    Function2<SparkAvgCount, Integer, SparkAvgCount> addAndCount = new Function2<SparkAvgCount, Integer, SparkAvgCount>() {
         public SparkAvgCount call(SparkAvgCount v1, Integer v2) throws Exception {
-            v1.total_+=v2;
-            v1.num_+=1;
+            v1.total_ += v2;
+            v1.num_ += 1;
             return v1;
         }
     };
 
 
     //combine
-    Function2<SparkAvgCount,SparkAvgCount,SparkAvgCount> combine=new Function2<SparkAvgCount, SparkAvgCount, SparkAvgCount>() {
+    Function2<SparkAvgCount, SparkAvgCount, SparkAvgCount> combine = new Function2<SparkAvgCount, SparkAvgCount, SparkAvgCount>() {
         public SparkAvgCount call(SparkAvgCount v1, SparkAvgCount v2) throws Exception {
-            v1.total_+=v2.total_;
-            v1.num_+=v1.num_;
+            v1.total_ += v2.total_;
+            v1.num_ += v1.num_;
             return v1;
         }
     };

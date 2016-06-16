@@ -19,7 +19,8 @@ import scala.Tuple3;
 
 import java.io.IOException;
 
-/** spark hbase 操作
+/**
+ * spark hbase 操作
  * 参见 http://wuchong.me/blog/2015/04/06/spark-on-hbase-new-api/
  * Created by morty on 2016/05/24.
  */
@@ -120,6 +121,7 @@ public class SparkHbaseOpt {
             }
         });
     }
+
     /**
      * 保存数据到hbase
      *

@@ -1,6 +1,6 @@
 package com.morty.java.dmp.elasticsearch.aggs;
 
-public class DisdinctAgg extends YiliAggsEntity {
+public class DisdinctAgg extends EsAggsEntity {
 
     private Long precisionThresholdStr = 40000L;
 
@@ -8,7 +8,7 @@ public class DisdinctAgg extends YiliAggsEntity {
         setAggName(aggName);
         setPrecisionThresholdStr(precisionThresholdStr);
         setAggSize(aggSize);
-        setAggType(YiliAggsEntity.DISDINCT_TYPE);
+        setAggType(EsAggsEntity.DISDINCT_TYPE);
     }
 
     public Long getPrecisionThresholdStr() {

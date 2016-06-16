@@ -41,6 +41,21 @@ public class HivejdbcOptDemo {
 
     /**
      *
+     * @param connection
+     * @return
+     */
+    public Statement getStatement(Connection connection){
+        try {
+            Statement statement=connection.createStatement();
+            return statement;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     *
      * @param statement
      * @param sql
      * @param sqlType  true 带返回值，false 不带返回值
