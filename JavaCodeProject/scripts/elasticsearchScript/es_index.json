@@ -1,12 +1,124 @@
 {
+  "settings": {
+    "number_of_shards": 3,
+    "number_of_replicas": 1
+  },
   "mappings":{
     "user":{
       "_all":{"enabled":false},
       "properties":{
-        "title":{"type":"string", "doc_value":"true"},
-        "name":{"type":"string", "doc_value":"true"},
-        "age":{"type":"integer", "doc_value":"true"},
-        "vip":{"type":"boolean", "doc_value":"true"},
+        "id": {
+          "type": "integer",
+          "doc_value": true
+        },
+        "name": {
+          "type": "string",
+          "doc_value": true
+        },
+        "email": {
+          "type": "string",
+          "doc_value": true
+        },
+        "title": {
+          "type": "string",
+          "doc_value": true
+        },
+        "age": {
+          "type": "integer",
+          "doc_value": true
+        },
+        "sex": {
+          "type": "integer",
+          "doc_value": false
+        },
+        "salaryAll": {
+          "type": "double",
+          "doc_value": false
+        },
+        "baseWage": {
+          "type": "double",
+          "doc_value": false
+        },
+        "wageRise": {
+          "type": "double",
+          "doc_value": false
+        },
+        "bonus": {
+          "type": "double",
+          "doc_value": false
+        },
+        "jobWage": {
+          "type": "double",
+          "doc_value": false
+        },
+        "quarterlyBonuses": {
+          "type": "double",
+          "doc_value": false
+        },
+        "yearEndBound": {
+          "type": "double",
+          "doc_value": false
+        },
+        "otherSubsidies": {
+          "type": "double",
+          "doc_value": false
+        },
+        "endowment": {
+          "type": "double",
+          "doc_value": false
+        },
+        "medical": {
+          "type": "double",
+          "doc_value": false
+        },
+        "unemployment": {
+          "type": "double",
+          "doc_value": false
+        },
+        "workInjury": {
+          "type": "double",
+          "doc_value": false
+        },
+        "childbith": {
+          "type": "double",
+          "doc_value": false
+        },
+        "housingAccount": {
+          "type": "double",
+          "doc_value": false
+        },
+        "entryTime": {
+          "type": "date",
+          "doc_value": false
+        },
+        "leaveTime": {
+          "type": "date",
+          "doc_value": false
+        },
+        "department": {
+          "type": "string",
+          "doc_value": true
+        },
+        "workPlace": {
+          "type": "string",
+          "doc_value": false
+        },
+        "directLeadership": {
+          "type": "string",
+          "doc_value": false
+        },
+        "skill": {
+          "type": "string",
+          "index": "analyzed"
+        },
+        "describe": {
+          "type": "string",
+          "index": "analyzed"
+        },
+        "admin": {
+          "type": "boolean",
+          "doc_value": "true"
+        },
         "address":{
           "properties":{
             "province":{
@@ -27,35 +139,6 @@
           }
         }
       }
-    },
-    "blogpost":{
-      "properties":{
-        "title":{"type":"string", "doc_value":"true"},
-        "body":{"type":"string", "doc_value":"true"},
-        "user_id":{
-          "type":"string",
-          "index":"not_analyzed",
-          "doc_value":"true"
-        },
-        "created":{
-          "type":"date",
-          "doc_value":"true",
-          "format":"strict_date_optional_time||epoch_millis"
-        }
-      }
-    },
-    "location":{
-      "properties":{
-        "user_id":{
-          "type":"string",
-          "index":"not_analyzed",
-          "doc_value":"true"
-        },
-        "geo":{
-          "type":"geo_point",
-          "doc_value":"true"
-        }
       }
     }
   }
-}
