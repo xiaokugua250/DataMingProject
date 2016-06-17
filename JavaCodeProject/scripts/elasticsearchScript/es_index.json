@@ -5,7 +5,17 @@
   },
   "mappings":{
     "user":{
-      "_all":{"enabled":false},
+      "_parent": {
+        "type": "companydept"
+      },
+      "_all": {
+        "enabled": true,
+        "analyzer": "like"
+      },
+      "_source": {
+        "compress": true
+      },
+
       "properties":{
         "id": {
           "type": "integer",
@@ -95,13 +105,33 @@
           "type": "date",
           "doc_value": false
         },
+        "departmentID": {
+          "type": "integer",
+          "doc_value": false
+        },
         "department": {
           "type": "string",
           "doc_value": true
         },
-        "workPlace": {
-          "type": "string",
+        "workPlaceId": {
+          "type": "integer",
           "doc_value": false
+        },
+        "workPlace": {
+          "properties": {
+            "workfactoryNos": {
+              "type": "integer"
+            },
+            "workshopNos": {
+              "type": "integer"
+            },
+            "producesTaskNos": {
+              "type": "integer"
+            },
+            "processProcedureNos": {
+              "type": "integer"
+            }
+          }
         },
         "directLeadership": {
           "type": "string",
@@ -139,6 +169,440 @@
           }
         }
       }
+    },
+    "companydept": {
+      "_all": {
+        "enabled": true,
+        "analyzer": "like"
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "deptID": {
+          "type": "integer",
+          "doc_value": false
+        },
+        "deptName": {
+          "type": "string",
+          "doc_value": false
+        },
+        "deptEmail": {
+          "type": "string",
+          "doc_value": false
+        },
+        "deptCreateTime": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "deptDismissTime": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "deptLeader": {
+          "type": "string",
+          "doc_value": false
+        },
+        "deptDeputyLeader": {
+          "type": "string",
+          "doc_value": false
+        },
+        "deptEmploye": {
+          "type": "nested"
+        },
+        "deptDuty": {
+          "type": "string",
+          "index": "analyzed",
+          "doc_value": false
+        },
+        "deptCostAll": {
+          "type": "double",
+          "doc_value": false
+        },
+        "deptSpecCost": {
+          "type": "double",
+          "doc_value": false
+        },
+        "deptBudget": {
+          "type": "double",
+          "doc_value": true
+        },
+        "deptActualCost": {
+          "type": "double",
+          "doc_value": true
+        },
+        "deptEmployNumber": {
+          "type": "integer",
+          "doc_value": true
+        }
+
       }
+    },
+    "factory": {
+      "_all": {
+        "enabled": true
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "factoryWorkerNum": {
+          "type": "integer"
+        },
+        "factoryWorkshopNos": {
+          "type": "integer"
+        },
+        "factoryproduceTaskNos": {
+          "type": "integer"
+        },
+        "factoryProcedureNos": {
+          "type": "integer"
+        }
+      }
+    },
+    "workshop": {
+      "_all": {
+        "enabled": true
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "WorkerNum": {
+          "type": "integer"
+        },
+        "FactoryNos": {
+          "type": "integer"
+        },
+        "produceTaskNos": {
+          "type": "integer"
+        },
+        "ProcedureNos": {
+          "type": "integer"
+        },
+        "workshopDetails": {
+          "type": "string"
+        }
+      }
+    },
+    "produceTask": {
+      "_all": {
+        "enabled": true
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "WorkerNum": {
+          "type": "integer"
+        },
+        "FactoryNos": {
+          "type": "integer"
+        },
+        "produceTaskNos": {
+          "type": "integer"
+        },
+        "processProcedureDetails": {
+          "type": "string"
+        }
+      }
+    },
+    "processProcedure": {
+      "_all": {
+        "enabled": true
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "processProcedureWorkerNos": {
+          "type": "integer",
+          "index_name": "processProcedureWorkerNo"
+        },
+        "processProcedureEquipmentNos": {
+          "type": "integer",
+          "index_name": "processProcedureEquipmentsNos"
+        },
+        "processProcedureMaterisSuppliesNos": {
+          "type": "integer",
+          "index_name": "processProcedureMaterisSuppliesNo"
+        },
+        "processFacNos": {
+          "type": "integer",
+          "index_name": "processFacno"
+        },
+        "processWorkshopNos": {
+          "type": "integer",
+          "index_name": "workshopNo"
+        },
+        "produceTaskNos": {
+          "type": "integer",
+          "index_name": "produceTaskNo"
+        },
+        "processFinshRate": {
+          "type": "double"
+        },
+        "processFinshNum": {
+          "type": "double"
+        }
+      }
+    },
+    "inspectItems": {
+      "_all": {
+        "enabled": true
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "InspectStdRecordTime": {
+          "type": "date",
+          "format": "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "InspectStdVersion": {
+          "type": "double"
+        },
+        "checkTool": {
+          "type": "string"
+        },
+        "inspectFactoryNos": {
+          "type": "integer",
+          "index_name": "inspectFactoryNo"
+        },
+        "workshopNos": {
+          "type": "integer",
+          "index_name": "workshopNo"
+        },
+        "produceTaskNos": {
+          "type": "integer",
+          "index_name": "produceTaskNo"
+        },
+        "processProcedureNos": {
+          "type": "integer",
+          "index_name": "producesProcedureNo"
+        },
+        "inspectItemStd": {
+          "properties": {
+            "starandValue": {
+              "type": "double"
+            },
+            "errorValue": {
+              "type": "double"
+            }
+          }
+        },
+        "inspectDestails": {
+          "properties": {
+            "checkTool": {
+              "type": "string"
+            },
+            "checkMachineNo": {
+              "type": "integer"
+            },
+            "checkerNO": {
+              "type": "integer"
+            },
+            "checkStd": {
+              "type": "double"
+            },
+            "checkErrValue": {
+              "type": "double"
+            },
+            "checkTime": {
+              "type": "date",
+              "format": "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+            },
+            "checkFrequence": {
+              "type": "integer"
+            },
+            "checkResult": {
+              "type": "integer"
+            },
+            "checkInfo": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "equiment": {
+      "_all": {
+        "enabled": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "number": {
+          "type": "double"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "BuyYear": {
+          "type": "date",
+          "format": "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "equipmentFacNos": {
+          "type": "integer",
+          "index_name": "equipmentFacNo"
+        },
+        "equimentWorkShopNos": {
+          "type": "integer",
+          "index_name": "equimentWorkShopNo"
+        },
+        "equimentproduceTaskNos": {
+          "type": "integer",
+          "index_name": "produceTaskNo"
+        },
+        "equimentProcessProcedureNos": {
+          "type": "integer"
+        },
+        "equimentDetails": {
+          "type": "string"
+        }
+      }
+    },
+    "materisSupplies": {
+      "_all": {
+        "enabled": true
+      },
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "name": {
+          "type": "string"
+        },
+        "number": {
+          "type": "double"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "storageTime": {
+          "type": "date",
+          "format": "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "storageAll": {
+          "type": "double"
+        },
+        "stroageRemain": {
+          "type": "double"
+        },
+        "comsumptionRate": {
+          "type": "double"
+        },
+        "comsumptionNum": {
+          "type": "double"
+        },
+        "storageLoc": {
+          "properties": {
+            "wareHouse": {
+              "wareHouseID": {
+                "type": "integer"
+              },
+              "wareHouseSection": {
+                "type": "string"
+              },
+              "stockShelves": {
+                "type": "string"
+              },
+              "Level": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "document": {
+      "_all": {
+        "enabled": true,
+        "analyzer": "like"
+      },
+      "_source": {
+        "compress": true
+      },
+      "properties": {
+        "id": {
+          "type": "integer",
+          "doc_value": true
+        },
+        "doc_name": {
+          "type": "integer",
+          "doc_value": true
+        },
+        "createTime": {
+          "type": "date",
+          "format": "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "updateTime": {
+          "type": "date",
+          "format": "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "createBy": {
+          "type": "string"
+        },
+        "updateBy": {
+          "type": "string"
+        },
+        "createDept": {
+          "type": "string"
+        },
+        "useDept": {
+          "type": "string"
+        },
+        "docDetails": {
+          "type": "string"
+        },
+        "docInfo": {
+          "type": "string"
+        }
+      }
+    }
+
     }
   }
