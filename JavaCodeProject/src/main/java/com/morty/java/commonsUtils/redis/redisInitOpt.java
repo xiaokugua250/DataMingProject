@@ -2,10 +2,7 @@ package com.morty.java.commonsUtils.redis;
 
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.SortingParams;
+import redis.clients.jedis.*;
 
 import java.util.List;
 import java.util.Map;
@@ -16,12 +13,26 @@ import java.util.Set;
  * Created by duliang on 2016/5/14.
  */
 public class RedisInitOpt {
-    static Logger LOG=Logger.getLogger(RedisInitOpt.class);
+    static Logger LOG = Logger.getLogger(RedisInitOpt.class.getName());
 
     private static  Jedis jedis;
     private static JedisPool pool;
     public JedisPoolConfig config;
     public ResourceBundle bundle;
+
+    public RedisInitOpt() {
+        bundle=ResourceBundle.getBundle("redis-commons");
+        if(bundle == null){
+            throw new IllegalArgumentException("redis.propertis is not found");
+        }
+        //TODO redis 配置信息
+        config=new JedisPoolConfig();
+        config.setMaxIdle(Integer.valueOf(bundle.getString("redis.pool.maxIdle")));
+        config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
+        config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
+        pool=new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
+
+    }
 
     /**
      * 获取Redis 是否采用池的方式获取
@@ -46,21 +57,6 @@ public class RedisInitOpt {
 
     }
 
-    public void init(){
-
-        bundle=ResourceBundle.getBundle("redis-commons");
-        if(bundle == null){
-            throw new IllegalArgumentException("redis.propertis is not found");
-        }
-        //TODO redis 配置信息
-        config=new JedisPoolConfig();
-        config.setMaxIdle(Integer.valueOf(bundle.getString("reids.pool.maxIdle")));
-        config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
-        config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
-        pool=new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
-
-    }
-
     /**
      *
      * @param key
@@ -76,6 +72,26 @@ public class RedisInitOpt {
             LOG.error("store keyvalue error:"+e.getMessage());
         }
     }
+
+    /**
+     * 返回jedis string
+     * @param key
+     * @param jedis
+     * @param params
+     * @return
+     */
+    public String getKeyValueRedis(String key,Jedis jedis,String ... params){
+        // TODO: 2016/6/13  查询string  
+       String value=null;
+        try{
+           value =jedis.get(key);
+        }catch (Exception e){
+            e.printStackTrace();
+            
+        }
+        return value;
+    }
+    
 
 
     /**
@@ -162,6 +178,19 @@ public class RedisInitOpt {
     /**
      *
      * @param jedis
+     * @param key
+     * @param time
+     * @param paramas
+     */
+    public void getKeyExpire(Jedis jedis,String key,int time,String ... paramas){
+        // TODO: 2016/6/14  设置超时失效
+        jedis.expire(key,time);
+
+    }
+
+    /**
+     *
+     * @param jedis
      */
     public void flushReids(Jedis jedis){
         try {
@@ -170,6 +199,22 @@ public class RedisInitOpt {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Jedis 集群
+     * @param clusterNode
+     * @param params
+     * @return
+     */
+    public JedisCluster getJedisCluster(Set<HostAndPort> clusterNode,String ... params){
+        // TODO: 2016/6/13  集群配置
+        //demo clusterNode.add(new HostAndPort("127.0.0.1",6379));
+        JedisCluster jedisCluster=new JedisCluster(clusterNode);
+        return jedisCluster;
+    }
+
+
+
 
 
 }

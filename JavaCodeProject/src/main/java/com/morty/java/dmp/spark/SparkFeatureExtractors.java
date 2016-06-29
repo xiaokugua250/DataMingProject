@@ -298,6 +298,7 @@ public class SparkFeatureExtractors {
         System.out.println("resultDF = " + resultDF);
     }
 
+
     public void AlgthRun() {
         init();
         JavaRDD<Row> jrdd = getJavaRddTmpl();

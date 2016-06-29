@@ -35,7 +35,48 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>1.8.1</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
 
+            <plugin>
+                <groupId>com.thoughtworks.paranamer</groupId>
+                <artifactId>paranamer-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run</id>  <!-- id is optional -->
+                        <configuration>
+                            <sourceDirectory>${project.build.directory}/generated-sources/avro</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -64,6 +105,8 @@
             <artifactId>hadoop-client</artifactId>
             <version>2.6.0</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.10</artifactId>
@@ -226,6 +269,19 @@
             <version>1.4.5</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-maven-plugin</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mrunit</groupId>
+            <artifactId>mrunit</artifactId>
+            <version>1.1.0</version>
+            <classifier>hadoop2</classifier>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
