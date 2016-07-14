@@ -167,7 +167,7 @@ for (Row r: results.select("features", "label", "myProbability", "prediction").c
             // With 3 values for hashingTF.numFeatures and 2 values for lr.regParam,
             // this grid will have 3 x 2 = 6 parameter settings for CrossValidator to choose from.
             ParamMap[] paramGrid = new ParamGridBuilder()
-            .addGrid(hashingTF.numFeatures(), new int[]{10, 100, 1000})
+            .addGrid(hashingTF.numFeatures(), n ew int[]{10, 100, 1000})
             .addGrid(lr.regParam(), new double[]{0.1, 0.01})
             .build();
         * */

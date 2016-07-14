@@ -36,6 +36,5 @@ Sci_Fi                    STRING COMMENT '',
 Thriller      STRING COMMENT '',
 War       STRING COMMENT '战争片',
 Western               STRING COMMENT '西部片'
-) COMMENT '电影数据表';
-hdfs://dev-cluster/user/hive/duliang/warehouse/hive_db/ml_data/u_data
-load data inpath '/user/zeus/duliang/warehouse/hive_db/ml_data/' overwrite into table du_u_data;
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'  STORED AS TEXTFILE;
+load data  local inpath '/user/zeus/duliang/warehouse/hive_db/ml_data/u.item' overwrite into table du_u_item;

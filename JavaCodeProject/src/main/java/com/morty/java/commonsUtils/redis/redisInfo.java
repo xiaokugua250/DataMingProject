@@ -5,7 +5,7 @@ package com.morty.java.commonsUtils.redis;
  */
 public class RedisInfo {
 
-    public static final String HOST="dev_redis_host";
+    public static final String HOST = "192.168.30.50";
     public static final int PORT=6379;
 
 

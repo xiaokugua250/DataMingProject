@@ -39,20 +39,6 @@ public class HivejdbcOptDemo {
         }
     }
 
-    /**
-     *
-     * @param connection
-     * @return
-     */
-    public Statement getStatement(Connection connection){
-        try {
-            Statement statement=connection.createStatement();
-            return statement;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      *

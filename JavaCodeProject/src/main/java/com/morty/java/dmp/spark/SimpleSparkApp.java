@@ -1,22 +1,10 @@
 package com.morty.java.dmp.spark;
 
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.DoubleFunction;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
-import org.apache.spark.api.java.function.PairFunction;
-import org.apache.xpath.operations.String;
-import scala.Tuple2;
-
-import java.util.List;
-
 /**
  * Created by morty on 2016/06/21.
  */
 public class SimpleSparkApp {
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         SparkConf conf = new SparkConf();
         conf.setAppName("simpleApp");
         JavaSparkContext javaSparkContext = new JavaSparkContext(conf);
@@ -57,5 +45,5 @@ public class SimpleSparkApp {
         }).collect();
 
     }
-
+*/
 }

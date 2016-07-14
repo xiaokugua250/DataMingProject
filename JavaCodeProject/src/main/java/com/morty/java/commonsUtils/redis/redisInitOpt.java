@@ -54,7 +54,7 @@ public class RedisInitOpt {
         }
         //TODO redis 配置信息
         config=new JedisPoolConfig();
-        config.setMaxIdle(Integer.valueOf(bundle.getString("reids.pool.maxIdle")));
+        config.setMaxIdle(Integer.valueOf(bundle.getString("redis.pool.maxIdle")));
         config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
         config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
         pool=new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
