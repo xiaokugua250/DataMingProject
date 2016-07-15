@@ -204,3 +204,7 @@ DROP TABLE IF EXISTS dmpbean_user [PURGE]
 --TRUNCATE TABLE
 
 TRUNCATE TABLE dmpbean_user [PARTITION partition_spec]
+
+CREATE INDEX employess_index ON TABLE emplopyes(country)
+AS 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler'
+WITH DEFERRED REBUILD
