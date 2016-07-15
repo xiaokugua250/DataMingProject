@@ -21,16 +21,16 @@ public class RedisInitOpt {
     public ResourceBundle bundle;
 
     public RedisInitOpt() {
-        bundle=ResourceBundle.getBundle("redis-commons");
-        if(bundle == null){
+        bundle = ResourceBundle.getBundle("redis-commons");
+        if (bundle == null) {
             throw new IllegalArgumentException("redis.propertis is not found");
         }
         //TODO redis 配置信息
-        config=new JedisPoolConfig();
+        config = new JedisPoolConfig();
         config.setMaxIdle(Integer.valueOf(bundle.getString("redis.pool.maxIdle")));
         config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
         config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
-        pool=new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
+        pool = new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
 
     }
 
@@ -75,19 +75,20 @@ public class RedisInitOpt {
 
     /**
      * 返回jedis string
+     *
      * @param key
      * @param jedis
      * @param params
      * @return
      */
-    public String getKeyValueRedis(String key,Jedis jedis,String ... params){
+    public String getKeyValueRedis(String key, Jedis jedis, String... params) {
         // TODO: 2016/6/13  查询string  
-       String value=null;
-        try{
-           value =jedis.get(key);
-        }catch (Exception e){
+        String value = null;
+        try {
+            value = jedis.get(key);
+        } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return value;
     }
@@ -182,9 +183,9 @@ public class RedisInitOpt {
      * @param time
      * @param paramas
      */
-    public void getKeyExpire(Jedis jedis,String key,int time,String ... paramas){
+    public void getKeyExpire(Jedis jedis, String key, int time, String... paramas) {
         // TODO: 2016/6/14  设置超时失效
-        jedis.expire(key,time);
+        jedis.expire(key, time);
 
     }
 
@@ -202,14 +203,15 @@ public class RedisInitOpt {
 
     /**
      * Jedis 集群
+     *
      * @param clusterNode
      * @param params
      * @return
      */
-    public JedisCluster getJedisCluster(Set<HostAndPort> clusterNode,String ... params){
+    public JedisCluster getJedisCluster(Set<HostAndPort> clusterNode, String... params) {
         // TODO: 2016/6/13  集群配置
         //demo clusterNode.add(new HostAndPort("127.0.0.1",6379));
-        JedisCluster jedisCluster=new JedisCluster(clusterNode);
+        JedisCluster jedisCluster = new JedisCluster(clusterNode);
         return jedisCluster;
     }
 

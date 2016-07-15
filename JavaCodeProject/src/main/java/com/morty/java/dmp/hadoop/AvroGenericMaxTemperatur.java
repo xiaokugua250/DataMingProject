@@ -1,6 +1,12 @@
 package com.morty.java.dmp.hadoop;
 /**
  * Created by duliang on 2016/6/19.
+ * <p>
+ * Created by IntelliJ IDEA.
+ * User: duliang
+ * Date: 2016/6/19
+ * Time: 10:56
+ * email:duliang1128@163.com
  */
 
 /**

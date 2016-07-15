@@ -6,7 +6,6 @@ package com.morty.java.dmp.spark;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.Function;
 
 /**
  * 搜狗日志分析
@@ -34,7 +33,7 @@ public class SparkSougou {
     public void sogouLogAna() {
         // TODO: 2016/6/25 要检测 
         JavaRDD<String> sogouLog = javaSparkContext.textFile("/duliang/warehouse/spark/sougou/SogouQ.reduced");
-        JavaRDD<String> filter = (JavaRDD<String>) sogouLog.map(new Function<String, String[]>() {
+        /*JavaRDD<String> filter = (JavaRDD<String>) sogouLog.map(new Function<String, String[]>() {
             @Override
             public String[] call(String s) throws Exception {
                 return s.split("\\t");
@@ -46,7 +45,7 @@ public class SparkSougou {
             }
 
 
-        });
+        });*/
     }
 
 }
