@@ -263,11 +263,7 @@
             <version>4.2.0</version>
         </dependency>
         <!-- http://mvnrepository.com/artifact/org.apache.sqoop/sqoop -->
-        <dependency>
-            <groupId>org.apache.sqoop</groupId>
-            <artifactId>sqoop</artifactId>
-            <version>1.4.5</version>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin -->
         <dependency>

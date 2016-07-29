@@ -34,7 +34,7 @@ public class RedisTest {
 
     @Test
     public void RedisPubSubTest() {
-        String redisIp = "127.0.0.1";
+        String redisIp = "192.168.30.50";
         int reidsPort = 6379;
         JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), redisIp, reidsPort);
 
