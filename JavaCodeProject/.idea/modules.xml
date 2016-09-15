@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JavaCodeProject.iml" filepath="$PROJECT_DIR$/JavaCodeProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.hudongpai.morty.java.j2seProject.iml" filepath="$PROJECT_DIR$/com.hudongpai.morty.java.j2seProject.iml" />
     </modules>
   </component>
 </project>
