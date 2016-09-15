@@ -5,8 +5,7 @@ package com.morty.java.dmp.hdfs;
  */
 public class FSInfo {
 
-    public static String DATA_SOURCE_URI="hdsf://dev:9000/hdfs/data";
-    public static String DATA_DESTINATION_URI="hdfs://dev:9000/hdfs/tmp";
-
+    public static String DATA_SOURCE_URI = "hdfs://dev1:8020/user/zeus/duliang/file01.txt";
+    public static String DATA_DESTINATION_URI = "hdfs://dev1:8020/user/zeus/duliang//file01.txt";
 
 }
