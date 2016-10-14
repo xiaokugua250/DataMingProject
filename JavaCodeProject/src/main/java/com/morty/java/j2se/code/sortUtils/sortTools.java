@@ -8,20 +8,20 @@ import java.util.Locale;
 /**
  * Created by duliang on 2016/5/15.
  *
- * collator类可用于简单排序
+ * collator������ڼ�����
  */
 public class sortTools {
-
-
 
     /**
      *
      * @param str
      */
-    public  static void  sordStrBysimChinese(String[] str){
-        Comparator cmp= Collator.getInstance(Locale.SIMPLIFIED_CHINESE);  //简体中文排序
-        Arrays.sort(str,cmp);
+    public static void sordStrBysimChinese(String[] str) {
+        Comparator cmp = Collator.getInstance(Locale.SIMPLIFIED_CHINESE);    // ������������
 
+        Arrays.sort(str, cmp);
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

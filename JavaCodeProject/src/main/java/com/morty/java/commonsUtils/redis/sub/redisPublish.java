@@ -13,7 +13,6 @@ import java.io.InputStreamReader;
 public class redisPublish {
     private final JedisPool jedisPool;
 
-
     public redisPublish(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
     }
@@ -21,10 +20,13 @@ public class redisPublish {
     public void start() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Jedis jedis = jedisPool.getResource();
+
         while (true) {
             String line = null;
+
             try {
                 line = reader.readLine();
+
                 if (!"quit".equals(line)) {
                     jedis.publish("mychannel", line);
                 } else {
@@ -36,3 +38,6 @@ public class redisPublish {
         }
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

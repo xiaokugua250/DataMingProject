@@ -5,3 +5,6 @@ package com.morty.java.commonsUtils.redis;
  */
 public class RedisKeyOpt {
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

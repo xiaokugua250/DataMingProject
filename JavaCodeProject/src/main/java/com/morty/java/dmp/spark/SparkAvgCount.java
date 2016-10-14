@@ -8,7 +8,6 @@ import java.io.Serializable;
  * Created by morty on 2016/05/23.
  */
 public class SparkAvgCount implements Serializable {
-
     public int total_;
     public int num_;
     Logger LOG = Logger.getLogger(SparkAvgCount.class.getName());
@@ -21,7 +20,7 @@ public class SparkAvgCount implements Serializable {
     public float avg() {
         return total_ / (float) num_;
     }
-
-
 }
 
+
+//~ Formatted by Jindent --- http://www.jindent.com

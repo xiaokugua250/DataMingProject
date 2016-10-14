@@ -3,9 +3,10 @@ package com.morty.java.dmp.dmpConfig;
 /**
  * Created by morty on 2016/07/15.
  */
+
 //
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
+//Source code recreated from a .class file by IntelliJ IDEA
+//(powered by Fernflower decompiler)
 //
 public class Namespace {
     public static final String CONF_ROOT = "/konzig";
@@ -27,3 +28,5 @@ public class Namespace {
     }
 }
 
+
+//~ Formatted by Jindent --- http://www.jindent.com

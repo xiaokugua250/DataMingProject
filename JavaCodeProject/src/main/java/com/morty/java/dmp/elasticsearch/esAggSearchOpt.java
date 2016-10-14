@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
  */
 public class EsAggSearchOpt {
     Logger LOG = Logger.getLogger(EsAggSearchOpt.class);
-
-
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

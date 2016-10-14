@@ -6,3 +6,6 @@ package com.morty.java.j2se.code.apachecommons;
  */
 public class apacheDigester {
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

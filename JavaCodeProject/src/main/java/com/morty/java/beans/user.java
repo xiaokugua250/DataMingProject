@@ -6,75 +6,25 @@ import java.io.Serializable;
  * Created by morty on 2016/05/17.
  */
 public class User implements Serializable {
-
     private static final long serialVersionUID = -407588917216956565L;
-
-    private  int id;
-    private String name;
-    private int age;
-    private Double income;
-    private String  describe;
-    private String province;
-    private String city;
-    private String street;
-    private Long postCode;
-    private String job;
-    private String shcool;
-    private String qqCount;
-    private String webChat;
-    private String email;
-    private String company;
+    private int               id;
+    private String            name;
+    private int               age;
+    private Double            income;
+    private String            describe;
+    private String            province;
+    private String            city;
+    private String            street;
+    private Long              postCode;
+    private String            job;
+    private String            shcool;
+    private String            qqCount;
+    private String            webChat;
+    private String            email;
+    private String            company;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public String getQqCount() {
-        return qqCount;
-    }
-
-    public void setQqCount(String qqCount) {
-        this.qqCount = qqCount;
-    }
-
-    public String getShcool() {
-        return shcool;
-    }
-
-    public void setShcool(String shcool) {
-        this.shcool = shcool;
-    }
-
-    public String getWebChat() {
-        return webChat;
-    }
-
-    public void setWebChat(String webChat) {
-        this.webChat = webChat;
     }
 
     public int getAge() {
@@ -93,12 +43,28 @@ public class User implements Serializable {
         this.city = city;
     }
 
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     public String getDescribe() {
         return describe;
     }
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getId() {
@@ -115,6 +81,14 @@ public class User implements Serializable {
 
     public void setIncome(Double income) {
         this.income = income;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 
     public String getName() {
@@ -141,6 +115,22 @@ public class User implements Serializable {
         this.province = province;
     }
 
+    public String getQqCount() {
+        return qqCount;
+    }
+
+    public void setQqCount(String qqCount) {
+        this.qqCount = qqCount;
+    }
+
+    public String getShcool() {
+        return shcool;
+    }
+
+    public void setShcool(String shcool) {
+        this.shcool = shcool;
+    }
+
     public String getStreet() {
         return street;
     }
@@ -149,7 +139,14 @@ public class User implements Serializable {
         this.street = street;
     }
 
+    public String getWebChat() {
+        return webChat;
+    }
 
-
-
+    public void setWebChat(String webChat) {
+        this.webChat = webChat;
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

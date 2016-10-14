@@ -6,8 +6,11 @@ import junit.framework.TestCase;
 /**
  * Created by Administrator on 2016/05/13.
  */
-public class utilsToolTest  extends TestCase{
-    public void testmutiArgs(){
+public class utilsToolTest extends TestCase {
+    public void testmutiArgs() {
         new UtilsTool().mutiArgs("hello", "word");
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

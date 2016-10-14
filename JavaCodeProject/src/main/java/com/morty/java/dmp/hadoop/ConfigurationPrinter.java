@@ -1,7 +1,4 @@
 package com.morty.java.dmp.hadoop;
-/**
- * Created by duliang on 2016/6/19.
- */
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -11,7 +8,11 @@ import org.apache.hadoop.util.ToolRunner;
 import java.util.Map;
 
 /**
- * 打印输出所有configuration中的配置属性
+ * Created by duliang on 2016/6/19.
+ */
+
+/**
+ * ��ӡ�������configuration�е���������
  * Created by IntelliJ IDEA.
  * User: duliang
  * Date: 2016/6/19
@@ -28,17 +29,21 @@ public class ConfigurationPrinter extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         int exitCode = ToolRunner.run(new ConfigurationPrinter(), args);
+
         System.exit(exitCode);
     }
 
     @Override
     public int run(String[] args) throws Exception {
         Configuration conf = getConf();
-        for (Map.Entry<String, String> entry : conf) {
-            System.out.println("entry = " + "entry.key===>" + entry.getKey() +
-                    "entry.value====>" + entry.getValue());
 
+        for (Map.Entry<String, String> entry : conf) {
+            System.out.println("entry = " + "entry.key===>" + entry.getKey() + "entry.value====>" + entry.getValue());
         }
+
         return 0;
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

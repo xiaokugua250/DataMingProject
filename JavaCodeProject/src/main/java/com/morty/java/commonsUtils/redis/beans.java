@@ -10,14 +10,25 @@ import java.io.Serializable;
  * Created by duliang on 2016/5/15.
  */
 public class Beans<T extends Object> implements Serializable {
-
-
     private static final long serialVersionUID = -4459808615555206832L;
+    private int               id;
+    private String            name;
+    private T                 key;
+    private T                 value;
 
-    private  int id;
-    private String name;
-    private  T key;
-    private  T value;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(id).append(name).append(key).append(value).toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("ID", id)
+                                                                        .append("NAME", name)
+                                                                        .append("KEY", key)
+                                                                        .append("VALUE", value)
+                                                                        .toString();
+    }
 
     public int getId() {
         return id;
@@ -25,14 +36,6 @@ public class Beans<T extends Object> implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public T getKey() {
@@ -43,6 +46,14 @@ public class Beans<T extends Object> implements Serializable {
         this.key = key;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public T getValue() {
         return value;
     }
@@ -50,26 +61,7 @@ public class Beans<T extends Object> implements Serializable {
     public void setValue(T value) {
         this.value = value;
     }
-
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("ID",id)
-                .append("NAME",name)
-                .append("KEY",key)
-                .append("VALUE",value)
-                .toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(id)
-                .append(name)
-                .append(key)
-                .append(value)
-                .toHashCode();
-    }
-
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

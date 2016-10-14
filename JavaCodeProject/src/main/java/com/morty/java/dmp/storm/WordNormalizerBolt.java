@@ -19,31 +19,7 @@ public class WordNormalizerBolt implements IRichBolt {
     private OutputCollector collector;
 
     @Override
-    public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
-        this.collector = outputCollector;
-    }
-
-    @Override
-    public void execute(Tuple tuple) {
-        String sentence = tuple.getString(0);
-        String[] words = sentence.split(" ");
-        for (String word : words) {
-            word = word.trim();
-            if (!word.isEmpty()) {
-                word = word.toLowerCase();
-                List a = new ArrayList();
-                a.add(tuple);
-                collector.emit(a, new Values(word));
-
-            }
-        }
-        collector.ack(tuple);
-
-    }
-
-    @Override
     public void cleanup() {
-
     }
 
     @Override
@@ -52,7 +28,36 @@ public class WordNormalizerBolt implements IRichBolt {
     }
 
     @Override
+    public void execute(Tuple tuple) {
+        String sentence = tuple.getString(0);
+        String[] words = sentence.split(" ");
+
+        for (String word : words) {
+            word = word.trim();
+
+            if (!word.isEmpty()) {
+                word = word.toLowerCase();
+
+                List a = new ArrayList();
+
+                a.add(tuple);
+                collector.emit(a, new Values(word));
+            }
+        }
+
+        collector.ack(tuple);
+    }
+
+    @Override
+    public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
+        this.collector = outputCollector;
+    }
+
+    @Override
     public Map<String, Object> getComponentConfiguration() {
         return null;
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

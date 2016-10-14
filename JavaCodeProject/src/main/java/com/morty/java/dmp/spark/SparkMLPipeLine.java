@@ -16,56 +16,45 @@ import org.apache.spark.sql.SQLContext;
  * Created by duliang on 2016/6/6.
  */
 public class SparkMLPipeLine {
-
     public JavaSparkContext javaSparkContext;
     public SparkConf sparkConf;
     public SQLContext sqlContext;
     Logger LOG = Logger.getLogger(SparkSQL.class.getName());
 
+    public void PipeLineRun(Pipeline pipeline, DataFrame dataframe) {
 
-    public void init() {
-        // TODO: 2016/6/6 算法初始化
-        sparkConf = new SparkConf();
-
-        javaSparkContext = new JavaSparkContext(sparkConf);
-
-        sqlContext = new SQLContext(javaSparkContext);
-
-
+        // TODO: 2016/6/6  ����pipeline��ѵ��ģ��
+        PipelineModel pipelineModel = pipeline.fit(dataframe);
     }
+
+//  Fit the pip
 
     public void SetPipeLine() {
-        // TODO: 2016/6/6  设置pipeline操作
 
-// Configure an ML pipeline, which consists of three stages: tokenizer, hashingTF, and lr.
-        Tokenizer tokenizer = new Tokenizer()
-                .setInputCol("text")
-                .setOutputCol("words");
-        HashingTF hashingTF = new HashingTF()
-                .setNumFeatures(1000)
+        // TODO: 2016/6/6  ����pipeline����
+//      Configure an ML pipeline, which consists of three stages: tokenizer, hashingTF, and lr.
+        Tokenizer tokenizer = new Tokenizer().setInputCol("text").setOutputCol("words");
+        HashingTF hashingTF = new HashingTF().setNumFeatures(1000)
                 .setInputCol(tokenizer.getOutputCol())
                 .setOutputCol("features");
-        LogisticRegression lr = new LogisticRegression()
-                .setMaxIter(10)
-                .setRegParam(0.01);
-        Pipeline pipeline = new Pipeline()
-                .setStages(new PipelineStage[]{tokenizer, hashingTF, lr});
-
+        LogisticRegression lr = new LogisticRegression().setMaxIter(10).setRegParam(0.01);
+        Pipeline pipeline = new Pipeline().setStages(new PipelineStage[]{tokenizer, hashingTF, lr});
     }
 
-    public void PipeLineRun(Pipeline pipeline, DataFrame dataframe) {
-        // TODO: 2016/6/6  运行pipeline，训练模型
+    public void init() {
 
-        PipelineModel pipelineModel = pipeline.fit(dataframe);
-
+        // TODO: 2016/6/6 �㷨��ʼ��
+        sparkConf = new SparkConf();
+        javaSparkContext = new JavaSparkContext(sparkConf);
+        sqlContext = new SQLContext(javaSparkContext);
     }
-// Fit the pip
 
     public void predict(PipelineModel pipelineModel, DataFrame dataframe) {
-        // TODO: 2016/6/6  运行模型预测
 
+        // TODO: 2016/6/6  ����ģ��Ԥ��
         pipelineModel.transform(dataframe);
-
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

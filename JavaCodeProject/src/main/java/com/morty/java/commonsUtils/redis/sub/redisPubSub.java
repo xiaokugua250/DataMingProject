@@ -6,7 +6,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
 
 /**
- * redis 订阅发布
+ * redis ���ķ���
  * Created by duliang on 2016/6/14.
  */
 public class redisPubSub extends JedisPubSub {
@@ -14,11 +14,13 @@ public class redisPubSub extends JedisPubSub {
         String redisIp = "127.0.0.1";
         int reidsPort = 6379;
         JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), redisIp, reidsPort);
-
         redisPuSubThread redisPuSubThread = new redisPuSubThread(jedisPool);
         Thread thread = new Thread(redisPuSubThread);
+
         thread.start();
+
         redisPublish publish = new redisPublish(jedisPool);
+
         publish.start();
     }
 
@@ -29,7 +31,16 @@ public class redisPubSub extends JedisPubSub {
         if (message.equals("quit")) {
             this.unsubscribe(channel);
         }
+    }
 
+    @Override
+    public void onPSubscribe(String pattern, int subscribedChannels) {
+        super.onPSubscribe(pattern, subscribedChannels);
+    }
+
+    @Override
+    public void onPUnsubscribe(String pattern, int subscribedChannels) {
+        super.onPUnsubscribe(pattern, subscribedChannels);
     }
 
     @Override
@@ -43,30 +54,13 @@ public class redisPubSub extends JedisPubSub {
     }
 
     @Override
-    public void onPUnsubscribe(String pattern, int subscribedChannels) {
-        super.onPUnsubscribe(pattern, subscribedChannels);
+    public void proceed(Client client, String... channels) {
+        super.proceed(client, channels);
     }
 
     @Override
-    public void onPSubscribe(String pattern, int subscribedChannels) {
-        super.onPSubscribe(pattern, subscribedChannels);
-    }
-
-    @Override
-    public void unsubscribe() {
-        super.unsubscribe();
-    }
-
-    @Override
-    public void unsubscribe(String... channels) {
-        // TODO: 2016/6/14  取消订阅
-        super.unsubscribe(channels);
-    }
-
-    @Override
-    public void subscribe(String... channels) {
-        // TODO: 2016/6/14  订阅channel
-        super.subscribe(channels);
+    public void proceedWithPatterns(Client client, String... patterns) {
+        super.proceedWithPatterns(client, patterns);
     }
 
     @Override
@@ -85,18 +79,27 @@ public class redisPubSub extends JedisPubSub {
     }
 
     @Override
+    public void subscribe(String... channels) {
+
+        // TODO: 2016/6/14  ����channel
+        super.subscribe(channels);
+    }
+
+    @Override
+    public void unsubscribe() {
+        super.unsubscribe();
+    }
+
+    @Override
+    public void unsubscribe(String... channels) {
+
+        // TODO: 2016/6/14  ȡ������
+        super.unsubscribe(channels);
+    }
+
+    @Override
     public boolean isSubscribed() {
         return super.isSubscribed();
-    }
-
-    @Override
-    public void proceedWithPatterns(Client client, String... patterns) {
-        super.proceedWithPatterns(client, patterns);
-    }
-
-    @Override
-    public void proceed(Client client, String... channels) {
-        super.proceed(client, channels);
     }
 
     @Override
@@ -104,3 +107,6 @@ public class redisPubSub extends JedisPubSub {
         return super.getSubscribedChannels();
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

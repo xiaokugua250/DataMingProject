@@ -1,14 +1,14 @@
 package com.morty.java.dmp.spark;
+
 /**
  * Created by duliang on 2016/6/25.
  */
-
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
 /**
- * 搜狗日志分析
+ * �ѹ���־����
  * Created by IntelliJ IDEA.
  * User: duliang
  * Date: 2016/6/25
@@ -27,25 +27,30 @@ public class SparkSougou {
                 .set("spark.driver.cores", "4")
                 .set("spark.eventLog.enabled", "true");
         javaSparkContext = new JavaSparkContext(sparkConf);
-
     }
 
     public void sogouLogAna() {
-        // TODO: 2016/6/25 要检测 
+
+        // TODO: 2016/6/25 Ҫ���
         JavaRDD<String> sogouLog = javaSparkContext.textFile("/duliang/warehouse/spark/sougou/SogouQ.reduced");
-        /*JavaRDD<String> filter = (JavaRDD<String>) sogouLog.map(new Function<String, String[]>() {
-            @Override
-            public String[] call(String s) throws Exception {
-                return s.split("\\t");
-            }
-        }).filter(new Function<String[], Boolean>() {
-            @Override
-            public Boolean call(String[] log) throws Exception {
-                return log[6].length() == 6;
-            }
 
-
-        });*/
+        /*
+         * JavaRDD<String> filter = (JavaRDD<String>) sogouLog.map(new Function<String, String[]>() {
+         *   @Override
+         *   public String[] call(String s) throws Exception {
+         *       return s.split("\\t");
+         *   }
+         * }).filter(new Function<String[], Boolean>() {
+         *   @Override
+         *   public Boolean call(String[] log) throws Exception {
+         *       return log[6].length() == 6;
+         *   }
+         *
+         *
+         * });
+         */
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

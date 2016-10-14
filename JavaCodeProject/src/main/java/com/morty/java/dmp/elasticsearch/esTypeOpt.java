@@ -14,18 +14,15 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
  * Created by Administrator on 2016/05/13.
  */
 public class EsTypeOpt {
-    public PutIndexedScriptResponse putIndexedScriptResponse;
-    public GetIndexedScriptResponse getIndexedScriptResponse;
+    public PutIndexedScriptResponse    putIndexedScriptResponse;
+    public GetIndexedScriptResponse    getIndexedScriptResponse;
     public DeleteIndexedScriptResponse deleteIndexedScriptResponse;
-    public Client client;
-    public CountResponse response;
+    public Client                      client;
+    public CountResponse               response;
 
-    public void getDocCount(String indexName,String type){
+    public void getDocCount(String indexName, String type) {
         try {
-            response=client.prepareCount(indexName)
-                    .setQuery(termQuery("_type",type))
-                    .execute()
-                    .get();
+            response = client.prepareCount(indexName).setQuery(termQuery("_type", type)).execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -33,3 +30,6 @@ public class EsTypeOpt {
         }
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

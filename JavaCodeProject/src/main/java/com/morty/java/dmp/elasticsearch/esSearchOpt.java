@@ -28,22 +28,27 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
  * Created by Administrator on 2016/05/13.
  */
 public class EsSearchOpt {
-    public static org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(EsConnectionOpt.class);
-    public Client client;
-    public SearchRequestBuilder builder;    //ES查询条件Builder
-    public QueryBuilder queryBuilder;
-    public  Settings settings;          //ES Settings
-    BulkRequestBuilder bulkRequestBuilder;
-    SearchResponse scrollResp;
+    public static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(EsConnectionOpt.class);
+    public Client                         client;
+    public SearchRequestBuilder           builder;     // ES��ѯ����Builder
+    public QueryBuilder                   queryBuilder;
+    public Settings                       settings;    // ES Settings
+    BulkRequestBuilder                    bulkRequestBuilder;
+    SearchResponse                        scrollResp;
 
-    public void init(){
-        client= EsDescribeInfo.getClient(true);
-        bulkRequestBuilder=client.prepareBulk();
-        Properties properties=new Properties();
-        properties.put("cluster.name", EsDescribeInfo.ES_CLUSTER_NAME);
-        properties.put("client.transport.sniff", "true");// 自动嗅探整个集群的状态,es会自动把集群中其它机器的ip地址加到客户端中
-        settings= Settings.settingsBuilder().put(properties).build();
+    /**
+     *  agg ��ѯ
+     * @param query
+     * @param aggregationBuilder
+     */
+    public void aggSearch(String query, AggregationBuilder aggregationBuilder) {
+        SearchResponse searchResponse;
 
+        searchResponse = client.prepareSearch()
+                               .setQuery(query)
+                               .addAggregation(aggregationBuilder)
+                               .execute()
+                               .actionGet();
     }
 
     /**
@@ -53,69 +58,79 @@ public class EsSearchOpt {
      * @param map
      * @return
      */
-    public BulkResponse bulkSearch(String indexName,String typeName,Map<String,Object> map){
+    public BulkResponse bulkSearch(String indexName, String typeName, Map<String, Object> map) {
         try {
-            bulkRequestBuilder.add(client.prepareIndex(
-                    indexName,"1")
-                    .setSource(jsonBuilder()
-                            .startObject()
-                            .map(map)
-                            .endObject()
-                    ));
-            bulkRequestBuilder.add(client.prepareIndex(indexName,typeName,"2")
-                    .setSource(jsonBuilder()
-                    .startObject()
-                    .field("user", "kimchy")
-                    .field("postDate", new Date())
-                    .field("message", "another post")
-                    .endObject()
-            ));
+            bulkRequestBuilder.add(client.prepareIndex(indexName, "1")
+                                         .setSource(jsonBuilder().startObject().map(map).endObject()));
+            bulkRequestBuilder.add(client.prepareIndex(indexName, typeName, "2")
+                                         .setSource(jsonBuilder().startObject()
+                                                                 .field("user", "kimchy")
+                                                                 .field("postDate", new Date())
+                                                                 .field("message", "another post")
+                                                                 .endObject()));
 
-            BulkResponse bulkResponse=bulkRequestBuilder.get();
-            if(bulkResponse.hasFailures()){
-                //TODO 处理返回错误
+            BulkResponse bulkResponse = bulkRequestBuilder.get();
+
+            if (bulkResponse.hasFailures()) {
+
+                // TODO �����ش���
             }
-            return  bulkResponse;
+
+            return bulkResponse;
         } catch (IOException e) {
             e.printStackTrace();
-
         }
+
         return null;
     }
 
-    /**
-     *
-     * @return
-     */
-    public SearchRequestBuilder getESQueryBuider(){
-        builder=client.prepareSearch(EsDescribeInfo.ES_INDEX_NMAE);     //搜索Index
-        builder.setTypes(EsDescribeInfo.ES_TYPE_NAME);      //搜索Type
-        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);  //搜索类型
-        //TODO 设置查询条件,builder.setXXX
-        /* builder.setQuery(QueryBuilders.matchQuery("wareName","30liuliang"));// 设置查询条件
-          builder.setPostFilter(FilterBuilders.rangeFilter("countValue").from(1000).to(5000));//设置过滤条件
-          builder.addSort("countValue", SortOrder.ASC);//字段排序
-          builder.addHighlightedField("wareName");//设置高亮字段
-          builder.setHighlighterPreTags("<font red='colr'>");//设置高亮前缀
-          builder.setHighlighterPostTags("</font>");//设置高亮后缀
-          builder.setFrom(0);//pageNo 开始下标
-          builder.setSize(2);//pageNum 共显示多少条
-        * */
-        return  builder;
+    public void init() {
+        client             = EsDescribeInfo.getClient(true);
+        bulkRequestBuilder = client.prepareBulk();
+
+        Properties properties = new Properties();
+
+        properties.put("cluster.name", EsDescribeInfo.ES_CLUSTER_NAME);
+        properties.put("client.transport.sniff", "true");    // �Զ���̽������Ⱥ��״̬,es���Զ��Ѽ�Ⱥ������������ip��ַ�ӵ��ͻ�����
+        settings = Settings.settingsBuilder().put(properties).build();
+    }
+
+    public void multiSearch() {
+        Node                 node = new Node(settings);
+        SearchRequestBuilder srb1 = node.client()
+                                        .prepareSearch()
+                                        .setQuery(QueryBuilders.queryStringQuery("elasticSearch"))
+                                        .setSize(1);
+        SearchRequestBuilder srb2 = node.client()
+                                        .prepareSearch()
+                                        .setQuery(QueryBuilders.matchQuery("name", "kimchy"))
+                                        .setSize(1);
+        MultiSearchResponse sr = node.client().prepareMultiSearch().add(srb1).add(srb2).execute().actionGet();
+
+//      You will get all individual responses from MultiSearchResponse#getResponses()
+        long nbHits = 0;
+
+        for (MultiSearchResponse.Item item : sr.getResponses()) {
+            SearchResponse response = item.getResponse();
+
+            nbHits += response.getHits().getTotalHits();
+        }
     }
 
     /**
-     * ES查询示例demo，其中查询条件可依据条件构建
-     * @return response     es查询结果
+     * ES��ѯʾ��demo�����в�ѯ������������������
+     * @return response     es��ѯ���
      */
-    public Object queryES(SearchRequestBuilder builder){
-        try{
-            SearchResponse response=builder.execute().actionGet();
+    public Object queryES(SearchRequestBuilder builder) {
+        try {
+            SearchResponse response = builder.execute().actionGet();
+
             return response;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            LOG.error("QUERY ERROR "+e.getMessage());
+            LOG.error("QUERY ERROR " + e.getMessage());
         }
+
         return null;
     }
 
@@ -126,84 +141,69 @@ public class EsSearchOpt {
      * @param val
      * @return
      */
-    public void scrollSearch(String key,String value,String val){
-            queryBuilder=termQuery(key,value);
-            scrollResp=client.prepareSearch(val)
-                   // .addSort(FieldSortBuilder.EMPTY_PARAMS,SortOrder.ASC)
-                    .setScroll(new TimeValue(60000))
-                    .setQuery(queryBuilder)
-                    .setSize(100).execute().actionGet();    ///100 hits per shard will be returned for each scroll
-//Scroll until no hits are returned
-        while (true){
-            for(SearchHit hit:scrollResp.getHits().getHits()){
-                //todo handle the hit
+    public void scrollSearch(String key, String value, String val) {
+        queryBuilder = termQuery(key, value);
+        scrollResp   = client.prepareSearch(val)
+
+        // .addSort(FieldSortBuilder.EMPTY_PARAMS,SortOrder.ASC)
+        .setScroll(new TimeValue(60000)).setQuery(queryBuilder).setSize(100).execute().actionGet();    // /100 hits per shard will be returned for each scroll
+
+//      Scroll until no hits are returned
+        while (true) {
+            for (SearchHit hit : scrollResp.getHits().getHits()) {
+
+                // todo handle the hit
             }
-            scrollResp=client.prepareSearchScroll(
-                    scrollResp.getScrollId()).
-                    setScroll(new TimeValue(600000)).
-                    execute().
-                    actionGet();
-            //todo handle the hit
-            if(scrollResp.getHits().getHits().length == 0){
+
+            scrollResp = client.prepareSearchScroll(scrollResp.getScrollId())
+                               .setScroll(new TimeValue(600000))
+                               .execute()
+                               .actionGet();
+
+            // todo handle the hit
+            if (scrollResp.getHits().getHits().length == 0) {
                 break;
             }
         }
-
     }
-
-    public void multiSearch(){
-        Node node=new Node(settings);
-        SearchRequestBuilder srb1=node.client().prepareSearch().setQuery
-                (QueryBuilders.queryStringQuery("elasticSearch")).setSize(1);
-        SearchRequestBuilder srb2 = node.client()
-                .prepareSearch().setQuery(QueryBuilders.matchQuery("name", "kimchy")).setSize(1);
-
-        MultiSearchResponse sr=node.client().prepareMultiSearch().
-                add(srb1)
-                .add(srb2)
-                .execute()
-                .actionGet();
-
-// You will get all individual responses from MultiSearchResponse#getResponses()
-        long nbHits=0;
-        for(MultiSearchResponse.Item item:sr.getResponses()){
-            SearchResponse response=item.getResponse();
-            nbHits+=response.getHits().getTotalHits();
-        }
-    }
-
-
-
 
     /**
-     *  agg 查询
-     * @param query
-     * @param aggregationBuilder
-     */
-    public void aggSearch(String query, AggregationBuilder aggregationBuilder){
-        SearchResponse searchResponse;
-        searchResponse = client.prepareSearch()
-                .setQuery(query)
-                .addAggregation(aggregationBuilder)
-                .execute()
-                .actionGet();
-    }
-
-
-    /**
-     *  AggregationsBuilders 构建aggregationbuilde来设置agg查询参数
+     *  AggregationsBuilders ����aggregationbuilde������agg��ѯ����
      * @param parmas
      * @return
      */
+    public AggregationBuilder getAggregationBuider(String... parmas) {
+        AggregationBuilder aggregationBuilder = null;
 
-    public AggregationBuilder getAggregationBuider(String ... parmas){
-        AggregationBuilder aggregationBuilder=null;
-        aggregationBuilder=AggregationBuilders
-                .terms(parmas[0])
-                .field(parmas[1])
-                .include(parmas[2]);
+        aggregationBuilder = AggregationBuilders.terms(parmas[0]).field(parmas[1]).include(parmas[2]);
+
         return aggregationBuilder;
     }
 
+    /**
+     *
+     * @return
+     */
+    public SearchRequestBuilder getESQueryBuider() {
+        builder = client.prepareSearch(EsDescribeInfo.ES_INDEX_NMAE);    // ����Index
+        builder.setTypes(EsDescribeInfo.ES_TYPE_NAME);            // ����Type
+        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);    // ��������
 
+        // TODO ���ò�ѯ����,builder.setXXX
+
+        /*
+         *  builder.setQuery(QueryBuilders.matchQuery("wareName","30liuliang"));// ���ò�ѯ����
+         * builder.setPostFilter(FilterBuilders.rangeFilter("countValue").from(1000).to(5000));//���ù�������
+         * builder.addSort("countValue", SortOrder.ASC);//�ֶ�����
+         * builder.addHighlightedField("wareName");//���ø����ֶ�
+         * builder.setHighlighterPreTags("<font red='colr'>");//���ø���ǰ׺
+         * builder.setHighlighterPostTags("</font>");//���ø�����׺
+         * builder.setFrom(0);//pageNo ��ʼ�±�
+         * builder.setSize(2);//pageNum ����ʾ������
+         */
+        return builder;
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

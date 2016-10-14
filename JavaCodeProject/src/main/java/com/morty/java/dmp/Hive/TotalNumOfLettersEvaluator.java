@@ -30,52 +30,39 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
  * public Object terminate(AggregationBuffer agg) throws HiveException;
  */
 public class TotalNumOfLettersEvaluator extends GenericUDAFEvaluator {
+    int total = 0;
     PrimitiveObjectInspector inputOI;
     ObjectInspector outputOI;
     PrimitiveObjectInspector IntegerOI;
-
-    int total = 0;
     private boolean warned = false;
 
     @Override
     public ObjectInspector init(Mode m, ObjectInspector[] parameters) throws HiveException {
         assert (parameters.length == 1);
         super.init(m, parameters);
-        if (m == Mode.PARTIAL1 || m == Mode.COMPLETE) {
+
+        if ((m == Mode.PARTIAL1) || (m == Mode.COMPLETE)) {
             inputOI = (PrimitiveObjectInspector) parameters[0];
         } else {
             IntegerOI = (PrimitiveObjectInspector) parameters[0];
         }
-        outputOI = ObjectInspectorFactory.getReflectionObjectInspector(Integer.class, ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+
+        outputOI = ObjectInspectorFactory.getReflectionObjectInspector(Integer.class,
+                ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+
         return outputOI;
-    }
-
-    @Override
-    public AggregationBuffer getNewAggregationBuffer() throws HiveException {
-        LetterSumAgg result = new LetterSumAgg();
-        return result;
-    }
-
-    @Override
-    public void reset(AggregationBuffer aggregationBuffer) throws HiveException {
-        LetterSumAgg myAgg = new LetterSumAgg();
     }
 
     @Override
     public void iterate(AggregationBuffer aggregationBuffer, Object[] objects) throws HiveException {
         assert (objects.length == 1);
+
         if (objects[0] != null) {
             LetterSumAgg myagg = (LetterSumAgg) aggregationBuffer;
             Object p1 = ((PrimitiveObjectInspector) inputOI.getPrimitiveJavaObject(objects[0]));
+
             myagg.add(String.valueOf(p1).length());
         }
-    }
-
-    @Override
-    public Object terminatePartial(AggregationBuffer aggregationBuffer) throws HiveException {
-        LetterSumAgg myagg = (LetterSumAgg) aggregationBuffer;
-        total += myagg.sum;
-        return total;
     }
 
     @Override
@@ -84,16 +71,40 @@ public class TotalNumOfLettersEvaluator extends GenericUDAFEvaluator {
             LetterSumAgg myagg1 = (LetterSumAgg) aggregationBuffer;
             Integer partialSum = (Integer) IntegerOI.getPrimitiveJavaObject(o);
             LetterSumAgg myagg2 = new LetterSumAgg();
+
             myagg2.add(partialSum);
             myagg1.add(myagg2.sum);
         }
     }
 
     @Override
+    public void reset(AggregationBuffer aggregationBuffer) throws HiveException {
+        LetterSumAgg myAgg = new LetterSumAgg();
+    }
+
+    @Override
     public Object terminate(AggregationBuffer aggregationBuffer) throws HiveException {
         LetterSumAgg myagg = (LetterSumAgg) aggregationBuffer;
+
         total = myagg.sum;
+
         return myagg.sum;
+    }
+
+    @Override
+    public Object terminatePartial(AggregationBuffer aggregationBuffer) throws HiveException {
+        LetterSumAgg myagg = (LetterSumAgg) aggregationBuffer;
+
+        total += myagg.sum;
+
+        return total;
+    }
+
+    @Override
+    public AggregationBuffer getNewAggregationBuffer() throws HiveException {
+        LetterSumAgg result = new LetterSumAgg();
+
+        return result;
     }
 
     static class LetterSumAgg implements AggregationBuffer {
@@ -104,3 +115,6 @@ public class TotalNumOfLettersEvaluator extends GenericUDAFEvaluator {
         }
     }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

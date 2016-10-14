@@ -1,9 +1,5 @@
 package com.morty.java.dmp.Oozie;
 
-/**
- * Created by duliang on 2016/6/13.
- */
-
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.WorkflowAction;
 import org.apache.oozie.client.WorkflowJob;
@@ -14,35 +10,42 @@ import java.io.FileInputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
 
+/**
+ * Created by duliang on 2016/6/13.
+ */
+
 public class LocalOozieExample {
-
-    public static void main(String... args) {
-        System.exit(execute(args));
-    }
-
     static int execute(String... args) {
         if (args.length != 2) {
             System.out.println();
             System.out.println("Expected parameters: <WF_APP_HDFS_URI> <WF_PROPERTIES>");
+
             return -1;
         }
+
         String appUri = args[0];
         String propertiesFile = args[1];
+
         if (propertiesFile != null) {
             File file = new File(propertiesFile);
+
             if (!file.exists()) {
                 System.out.println();
                 System.out.println("Specified Properties file does not exist: " + propertiesFile);
+
                 return -1;
             }
+
             if (!file.isFile()) {
                 System.out.println();
                 System.out.println("Specified Properties file is not a file: " + propertiesFile);
+
                 return -1;
             }
         }
 
         try {
+
             // start local Oozie
             LocalOozie.start();
 
@@ -51,9 +54,11 @@ public class LocalOozieExample {
 
             // create a workflow job configuration and set the workflow application path
             Properties conf = wc.createConfiguration();
+
             conf.setProperty(OozieClient.APP_PATH, appUri + File.separator + "workflow.xml");
             conf.setProperty("mapreduce.jobtracker.kerberos.principal", "mapred/localhost@LOCALHOST");
             conf.setProperty("dfs.namenode.kerberos.principal", "hdfs/localhost@LOCALHOST");
+
             // load additional workflow job parameters from properties file
             if (propertiesFile != null) {
                 conf.load(new FileInputStream(propertiesFile));
@@ -61,6 +66,7 @@ public class LocalOozieExample {
 
             // submit and start the workflow job
             String jobId = wc.run(conf);
+
             Thread.sleep(1000);
             System.out.println("Workflow job submitted");
 
@@ -75,15 +81,23 @@ public class LocalOozieExample {
             System.out.println("Workflow job completed ...");
             printWorkflowInfo(wc.getJobInfo(jobId));
 
-            return (wc.getJobInfo(jobId).getStatus() == WorkflowJob.Status.SUCCEEDED) ? 0 : -1;
+            return (wc.getJobInfo(jobId).getStatus() == WorkflowJob.Status.SUCCEEDED)
+                    ? 0
+                    : -1;
         } catch (Exception ex) {
             System.out.println();
             System.out.println(ex.getMessage());
+
             return -1;
         } finally {
+
             // stop local Oozie
             LocalOozie.stop();
         }
+    }
+
+    public static void main(String... args) {
+        System.exit(execute(args));
     }
 
     private static void printWorkflowInfo(WorkflowJob wf) {
@@ -91,11 +105,17 @@ public class LocalOozieExample {
         System.out.println("Application Name   : " + wf.getAppName());
         System.out.println("Application Status : " + wf.getStatus());
         System.out.println("Application Actions:");
+
         for (WorkflowAction action : wf.getActions()) {
-            System.out.println(MessageFormat.format("   Name: {0} Type: {1} Status: {2}", action.getName(),
-                    action.getType(), action.getStatus()));
+            System.out.println(MessageFormat.format("   Name: {0} Type: {1} Status: {2}",
+                    action.getName(),
+                    action.getType(),
+                    action.getStatus()));
         }
+
         System.out.println();
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

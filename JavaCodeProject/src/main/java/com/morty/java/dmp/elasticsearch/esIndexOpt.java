@@ -16,42 +16,43 @@ public class EsIndexOpt {
     DeleteIndexedScriptResponse deleteIndexedScriptResponse;
     Client client;
 
-    public void init(){
-
+    /**
+     * ����SetXXX
+     */
+    public void deleteIndexedScriptOpt() {
+        deleteIndexedScriptResponse = client.prepareDeleteIndexedScript()
+                .setScriptLang("groovy")
+                .setId("script1")
+                .execute()
+                .actionGet();
     }
 
-
-    /**
-     * 调用setXXX
-     */
-    public void setPutIndexedScriptOpt(){
-     putIndexedScriptResponse=client.preparePutIndexedScript().setScriptLang("groovy")
-             .setId("script1")
-             .setSource("script", "_score * doc['my_numeric_field'].value")
-             .execute()
-             .actionGet();
+    public void init() {
     }
 
-
     /**
-     * 调用SetXXX
+     * ����SetXXX
      */
-    public void getIndexedScriptOpt(){
-        getIndexedScriptResponse=client.prepareGetIndexedScript().setScriptLang("groovy")
+    public void getIndexedScriptOpt() {
+        getIndexedScriptResponse = client.prepareGetIndexedScript()
+                .setScriptLang("groovy")
                 .setId("script1")
                 .execute()
                 .actionGet();
     }
 
     /**
-     * 调用SetXXX
+     * ����setXXX
      */
-    public void deleteIndexedScriptOpt(){
-        deleteIndexedScriptResponse=client.prepareDeleteIndexedScript().setScriptLang("groovy")
+    public void setPutIndexedScriptOpt() {
+        putIndexedScriptResponse = client.preparePutIndexedScript()
+                .setScriptLang("groovy")
                 .setId("script1")
+                .setSource("script", "_score * doc['my_numeric_field'].value")
                 .execute()
                 .actionGet();
     }
-
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

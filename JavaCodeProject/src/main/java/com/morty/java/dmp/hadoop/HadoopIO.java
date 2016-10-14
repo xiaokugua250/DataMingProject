@@ -1,7 +1,4 @@
 package com.morty.java.dmp.hadoop;
-/**
- * Created by duliang on 2016/6/18.
- */
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -18,6 +15,10 @@ import java.io.OutputStream;
 import java.net.URI;
 
 /**
+ * Created by duliang on 2016/6/18.
+ */
+
+/**
  * Created by IntelliJ IDEA.
  * User: duliang
  * Date: 2016/6/18
@@ -25,37 +26,36 @@ import java.net.URI;
  * email:duliang1128@163.com
  */
 public class HadoopIO {
-
     Configuration conf;
     FileSystem fileSystem;
 
-    public void init() {
-        // TODO: 2016/6/18   初始化操作
-        conf = new Configuration();
-    }
-
     /**
-     * @param codecClassName 压缩类的名称
-     * @param input          输入
-     * @param output         输出
+     * @param codecClassName ѹ���������
+     * @param input          ����
+     * @param output         ���
      */
     public void CompressStream(String codecClassName, InputStream input, OutputStream output) throws IOException {
-        // TODO: 2016/6/18  压缩从输入读取的数据
+
+        // TODO: 2016/6/18  ѹ���������ȡ������
         Class<?> codeClass = null;
         CompressionOutputStream out = null;
+
         try {
             codeClass = Class.forName(codecClassName);
-            org.apache.hadoop.io.compress.CompressionCodec codec = (org.apache.hadoop.io.compress.CompressionCodec) ReflectionUtils.newInstance(codeClass, conf);
-            Compressor compressor = null;
-         /*
-          //todo压缩池
 
-           compressor= CodecPool.getCompressor(codec);
-            out=codec.createOutputStream(output,compressor);
-            */
+            org.apache.hadoop.io.compress.CompressionCodec codec =
+                    (org.apache.hadoop.io.compress.CompressionCodec) ReflectionUtils.newInstance(codeClass,
+                            conf);
+            Compressor compressor = null;
+
+            /*
+             * //todoѹ����
+             *
+             * compressor= CodecPool.getCompressor(codec);
+             *  out=codec.createOutputStream(output,compressor);
+             */
             out = codec.createOutputStream(output);
             IOUtils.copyBytes(input, out, 4096, false);
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -66,18 +66,23 @@ public class HadoopIO {
     }
 
     public void FileCompressor(String fileUri) throws Exception {
-        // TODO: 2016/6/18  根据文件扩展名选取codec解压缩文件
+
+        // TODO: 2016/6/18  �����ļ���չ��ѡȡcodec��ѹ���ļ�
         fileSystem = FileSystem.get(URI.create(fileUri), conf);
+
         Path inputpath = new Path(fileUri);
         CompressionCodecFactory factory = new CompressionCodecFactory(conf);
         org.apache.hadoop.io.compress.CompressionCodec codec = factory.getCodec(inputpath);
+
         if (codec == null) {
             System.err.print("no codec found for" + fileUri);
             System.exit(1);
         }
+
         String outputUri = CompressionCodecFactory.removeSuffix(fileUri, codec.getDefaultExtension());
         InputStream inputStream = null;
         OutputStream outputStream = null;
+
         try {
             inputStream = codec.createInputStream(fileSystem.open(inputpath));
             outputStream = fileSystem.create(new Path(outputUri));
@@ -88,4 +93,12 @@ public class HadoopIO {
         }
     }
 
+    public void init() {
+
+        // TODO: 2016/6/18   ��ʼ������
+        conf = new Configuration();
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

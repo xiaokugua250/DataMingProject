@@ -13,48 +13,84 @@ import java.util.Set;
  * Created by duliang on 2016/5/14.
  */
 public class RedisInitOpt {
-    static Logger LOG = Logger.getLogger(RedisInitOpt.class.getName());
-
-    private static  Jedis jedis;
+    static Logger            LOG = Logger.getLogger(RedisInitOpt.class.getName());
+    private static Jedis     jedis;
     private static JedisPool pool;
-    public JedisPoolConfig config;
-    public ResourceBundle bundle;
+    public JedisPoolConfig   config;
+    public ResourceBundle    bundle;
 
     public RedisInitOpt() {
         bundle = ResourceBundle.getBundle("redis-commons");
+
         if (bundle == null) {
             throw new IllegalArgumentException("redis.propertis is not found");
         }
-        //TODO redis 配置信息
+
+        // TODO redis ������Ϣ
         config = new JedisPoolConfig();
         config.setMaxIdle(Integer.valueOf(bundle.getString("redis.pool.maxIdle")));
         config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxActive")));
         config.setMaxWaitMillis(Integer.valueOf(bundle.getString("redis.pool.maxWait")));
         pool = new JedisPool(new JedisPoolConfig(), RedisInfo.HOST, RedisInfo.PORT);
-
     }
 
     /**
-     * 获取Redis 是否采用池的方式获取
+     * ��ȡRedis �Ƿ���óصķ�ʽ��ȡ
      * @param isPool
      * @return
      */
-    public  synchronized  static  Jedis getJedis(boolean isPool){
-
+    public synchronized static Jedis getJedis(boolean isPool) {
         try {
-            if(pool !=null){
-                jedis=pool.getResource();
+            if (pool != null) {
+                jedis = pool.getResource();
+
                 return jedis;
-            }else {
-                return  null;
+            } else {
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            LOG.error("get jedis error:"+e.getMessage());
+            LOG.error("get jedis error:" + e.getMessage());
+
             return null;
-
         }
+    }
 
+    /**
+     * �洢����ʱ��Ҫ�������л�
+     * @param obj
+     * @param jedis
+     */
+    public void ObjectRedis(Beans<String> obj, Jedis jedis) {
+        jedis.flushDB();
+
+        byte[] objBytes = SerializationUtils.serialize(obj);    // ���л�
+
+        jedis.set(objBytes, objBytes);
+
+        // jedis.get(objBytes);
+    }
+
+    /**
+     *
+     * @param jedis
+     */
+    public void flushReids(Jedis jedis) {
+        try {
+            jedis.flushDB();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @param map
+     * @param jedis
+     */
+    public void hashRedis(Map<?, ?> map, Jedis jedis) {
+        jedis.flushDB();
+        jedis.hmset(System.currentTimeMillis() + map.toString(), (Map<String, String>) map);
     }
 
     /**
@@ -63,118 +99,62 @@ public class RedisInitOpt {
      * @param value
      * @param jedis
      */
-    public void keyValueRedis(String  key,String value,Jedis jedis){
+    public void keyValueRedis(String key, String value, Jedis jedis) {
         try {
-            jedis.set(System.currentTimeMillis()+key,value);
-            //jedis.get(key);
+            jedis.set(System.currentTimeMillis() + key, value);
+
+            // jedis.get(key);
         } catch (Exception e) {
             e.printStackTrace();
-            LOG.error("store keyvalue error:"+e.getMessage());
+            LOG.error("store keyvalue error:" + e.getMessage());
         }
     }
 
     /**
-     * 返回jedis string
      *
-     * @param key
+     * @param list
      * @param jedis
+     */
+    public void listRedis(List<?> list, Jedis jedis) {
+        jedis.flushDB();
+        jedis.lpush(System.currentTimeMillis() + list.toString(), list.toArray(new String[list.size()]));
+
+        /*
+         * jedis.lpush("collections", "HashSet");
+         * jedis.lpush("collections", "TreeSet");
+         * jedis.lpush("collections", "TreeMap");
+         */
+    }
+
+    /**
+     *
+     * @param list
+     * @param jedis
+     */
+    public void sortRedis(List<?> list, Jedis jedis) {
+        jedis.flushDB();
+        jedis.lpush(System.currentTimeMillis() + list.toString(), list.toArray(new String[list.size()]));
+
+        SortingParams sortingParams = new SortingParams();
+
+        jedis.sort(System.currentTimeMillis() + list.toString(), sortingParams.alpha());
+    }
+
+    /**
+     * Jedis ��Ⱥ
+     *
+     * @param clusterNode
      * @param params
      * @return
      */
-    public String getKeyValueRedis(String key, Jedis jedis, String... params) {
-        // TODO: 2016/6/13  查询string  
-        String value = null;
-        try {
-            value = jedis.get(key);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public JedisCluster getJedisCluster(Set<HostAndPort> clusterNode, String... params) {
 
-        }
-        return value;
+        // TODO: 2016/6/13  ��Ⱥ����
+        // demo clusterNode.add(new HostAndPort("127.0.0.1",6379));
+        JedisCluster jedisCluster = new JedisCluster(clusterNode);
+
+        return jedisCluster;
     }
-    
-
-
-    /**
-     * 存储对象时需要进行序列化
-     * @param obj
-     * @param jedis
-     */
-    public void ObjectRedis(Beans<String> obj, Jedis jedis){
-
-        jedis.flushDB();
-        byte[] objBytes=SerializationUtils.serialize(obj);  //序列化
-        jedis.set(objBytes,objBytes);
-       // jedis.get(objBytes);
-    }
-
-    /**
-     *
-     * @param list
-     * @param jedis
-     */
-    public void listRedis(List<?> list, Jedis jedis ){
-
-        jedis.flushDB();
-        jedis.lpush(System.currentTimeMillis()+list.toString(),list.toArray(new  String[list.size()]));
-        /*jedis.lpush("collections", "HashSet");
-        jedis.lpush("collections", "TreeSet");
-        jedis.lpush("collections", "TreeMap");*/
-
-    }
-
-    /**
-     *
-     * @param set
-     * @param jedis
-     */
-    public void setRedis(Set<?> set,Jedis jedis){
-
-        jedis.flushDB();
-        jedis.sadd(System.currentTimeMillis()+set.toString(),set.toArray(new String[set.size()]));
-    }
-
-    /**
-     *
-     * @param map
-     * @param jedis
-     */
-    public void hashRedis(Map<?,?>map,Jedis jedis){
-
-        jedis.flushDB();
-        jedis.hmset(System.currentTimeMillis()+map.toString(), (Map<String, String>) map);
-
-    }
-
-    /**
-     *
-     * @param list
-     * @param jedis
-     */
-    public void sortRedis(List<?> list,Jedis jedis){
-        jedis.flushDB();
-        jedis.lpush(System.currentTimeMillis()+list.toString(),list.toArray(new String [list.size()]));
-
-        SortingParams sortingParams=new SortingParams();
-        jedis.sort(System.currentTimeMillis()+list.toString(),sortingParams.alpha());
-
-    }
-
-    /**
-     *
-     * @param jedis
-     * @return
-     */
-    public String  isPing(Jedis jedis){
-
-        try {
-            return  jedis.ping();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "ERROR" ;
-        }
-    }
-
 
     /**
      *
@@ -184,39 +164,58 @@ public class RedisInitOpt {
      * @param paramas
      */
     public void getKeyExpire(Jedis jedis, String key, int time, String... paramas) {
-        // TODO: 2016/6/14  设置超时失效
-        jedis.expire(key, time);
 
+        // TODO: 2016/6/14  ���ó�ʱʧЧ
+        jedis.expire(key, time);
+    }
+
+    /**
+     * ����jedis string
+     *
+     * @param key
+     * @param jedis
+     * @param params
+     * @return
+     */
+    public String getKeyValueRedis(String key, Jedis jedis, String... params) {
+
+        // TODO: 2016/6/13  ��ѯstring
+        String value = null;
+
+        try {
+            value = jedis.get(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return value;
     }
 
     /**
      *
      * @param jedis
+     * @return
      */
-    public void flushReids(Jedis jedis){
+    public String isPing(Jedis jedis) {
         try {
-            jedis.flushDB();
+            return jedis.ping();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return "ERROR";
         }
     }
 
     /**
-     * Jedis 集群
      *
-     * @param clusterNode
-     * @param params
-     * @return
+     * @param set
+     * @param jedis
      */
-    public JedisCluster getJedisCluster(Set<HostAndPort> clusterNode, String... params) {
-        // TODO: 2016/6/13  集群配置
-        //demo clusterNode.add(new HostAndPort("127.0.0.1",6379));
-        JedisCluster jedisCluster = new JedisCluster(clusterNode);
-        return jedisCluster;
+    public void setRedis(Set<?> set, Jedis jedis) {
+        jedis.flushDB();
+        jedis.sadd(System.currentTimeMillis() + set.toString(), set.toArray(new String[set.size()]));
     }
-
-
-
-
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

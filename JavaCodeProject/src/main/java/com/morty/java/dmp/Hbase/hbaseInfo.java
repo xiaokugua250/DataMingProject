@@ -5,3 +5,6 @@ package com.morty.java.dmp.Hbase;
  */
 public class HbaseInfo {
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com
