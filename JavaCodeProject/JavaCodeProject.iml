@@ -12,6 +12,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.10.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.paranamer:paranamer:2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.5" level="project" />
+    <orderEntry type="library" name="Maven: log4j:apache-log4j-extras:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:5.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-backward-codecs:5.5.0" level="project" />
@@ -204,7 +207,7 @@
     <orderEntry type="module-library">
       <library name="Maven: jdk.tools:jdk.tools:1.7">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_73/lib/tools.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_20/jre/../lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -311,7 +314,6 @@
     <orderEntry type="library" name="Maven: org.apache.hive:hive-serde:0.13.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive:hive-exec:0.13.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive:hive-ant:0.13.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ant:ant:1.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ant:ant-launcher:1.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive.hcatalog:hive-hcatalog-server-extensions:0.13.1" level="project" />
@@ -356,6 +358,33 @@
     <orderEntry type="library" name="Maven: net.sourceforge.collections:collections-generic:4.01" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit:3.3.1.201403241930-r" level="project" />
     <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.50" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.sqoop:sqoop:1.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.avro:avro-maven-plugin:1.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-project:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-settings:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-profile:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-model:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-artifact-manager:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-repository-metadata:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven.wagon:wagon-provider-api:1.0-beta-2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-registry:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-interpolation:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:1.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-artifact:2.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1" level="project" />
+    <orderEntry type="library" name="Maven: classworlds:classworlds:1.1-alpha-2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven.shared:file-management:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-shared-io:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.avro:avro-compiler:1.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.mrunit:mrunit:hadoop2:1.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:1.9.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-core:1.5.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-reflect:1.5.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.javassist:javassist:3.18.0-GA" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-api-mockito:1.5.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-api-support:1.5.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-module-junit4:1.5.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-module-junit4-common:1.5.1" level="project" />
   </component>
 </module>
