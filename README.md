@@ -1,5 +1,6 @@
 # DataMingProject
-大数据平台相关代码（ES/Hive/Hadoop/hdfs/hbase）
+~~大数据平台相关代码（ES/Hive/Hadoop/hdfs/hbase）~~  
+注意: 本项目已经不再维护
 ## DMP项目代码
 - Elastic Search 操作
 - Hive操作
