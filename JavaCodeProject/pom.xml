@@ -85,7 +85,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--     编译时的编码   -->
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <es.version>2.3.1</es.version>
+        <es.version>6.8.15</es.version>
     </properties>
     <dependencies>
         <dependency>
